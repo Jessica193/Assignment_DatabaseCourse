@@ -20,7 +20,7 @@ public class ProjectRepository(DataContext context) : BaseRepository<ProjectEnti
             .Include(p => p.StatusType)
             .ToListAsync();
 
-        return projectEntities;
+        return null!;
     }
 
     public override Task<ProjectEntity> GetOneWithDetailsAsync(Func<IQueryable<ProjectEntity>, IQueryable<ProjectEntity>> includeExpression, Expression<Func<ProjectEntity, bool>> predicate)

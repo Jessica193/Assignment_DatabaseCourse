@@ -2,13 +2,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace BusinessLibrary.Models
+namespace BusinessLibrary.Dtos
 {
     public class ProjectRegistrationForm
     {
-
         [Required]
-        [MinLength(2, ErrorMessage = "Name must be at least two characters long.")]
         public string Name { get; set; } = null!;
 
         public string? Description { get; set; }
@@ -18,7 +16,10 @@ namespace BusinessLibrary.Models
 
         [Required]
         public DateTime EndDate { get; set; }
+        public decimal TotalPrice { get; set; }  //ska vara en beräkning av service.PricePerUnit * service.Quantity eller 
+                                                    //serviceEntity.PricePerUnit * serviceEntity.Quantity. Nåt sånt.
 
-        
+
+
     }
 }
