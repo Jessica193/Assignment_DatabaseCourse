@@ -21,11 +21,22 @@ public static class CustomerFactory
 
     public static Customer Create(CustomerEntity entity)
     {
+        var contactPersons = new List<ContactPerson>();
+
+        foreach (var row in entity.ContactPerson)
+            contactPersons.Add(new ContactPerson
+            {
+                FirstName = row.FirstName,
+                LastName = row.LastName,
+                Email = row.Email,
+                PhoneNumber = row.PhoneNumber,
+            });
+
         return new Customer()
         {
             Id = entity.Id,
             Name = entity.Name,
-
+            ContactPersons = contactPersons
         };
     }
 }

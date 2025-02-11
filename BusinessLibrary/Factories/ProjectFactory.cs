@@ -34,10 +34,11 @@ public static class ProjectFactory
             Description= entity.Description,
             StartDate = entity.StartDate,
             EndDate = entity.EndDate,
-            TotalPrice = entity.TotalPrice,
-           
-            
-
+            TotalPrice = service.PricePerUnit * service.Quantity,
+            StatusType = StatusTypeFactory.Create(entity.StatusType),
+            Service = ServiceFactory.Create(entity.Service),
+            Employee = EmployeeFactory.Create(entity.Employee),
+            Customer = CustomerFactory.Create(entity.Customer),
         };
     }
     

@@ -30,7 +30,7 @@ public static class EmployeeFactory
             FirstName = entity.FirstName,
             LastName = entity.LastName,
             Email = entity.Email,
-
+            Role = RoleFactory.Create(entity.Role),
         };
     }
 }

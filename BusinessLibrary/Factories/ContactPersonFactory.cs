@@ -25,6 +25,7 @@ public static class ContactPersonFactory
 
     public static ContactPerson Create(ContactPersonEntity entity)
     {
+
         return new ContactPerson()
         {
             Id = entity.Id,

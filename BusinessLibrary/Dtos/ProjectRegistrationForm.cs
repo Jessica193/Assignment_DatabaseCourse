@@ -16,8 +16,7 @@ namespace BusinessLibrary.Dtos
 
         [Required]
         public DateTime EndDate { get; set; }
-        public decimal TotalPrice { get; set; }  //ska vara en beräkning av service.PricePerUnit * service.Quantity eller 
-                                                    //serviceEntity.PricePerUnit * serviceEntity.Quantity. Nåt sånt.
+        public decimal TotalPrice { get; set; }  
 
 
 

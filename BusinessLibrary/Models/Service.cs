@@ -9,9 +9,5 @@ public class Service
     public string Name { get; set; } = null!;
     public int Quantity { get; set; }
     public decimal PricePerUnit { get; set; }
-
-
-
-
     public UnitType Unit { get; set; } = null!;
 }

@@ -15,7 +15,7 @@ namespace BusinessLibrary.Models
 
 
 
-        public string StatusType { get; set; } = null!;
+        public StatusType StatusType { get; set; } = null!;
         public Service Service { get; set; } = null!;
         public Employee Employee { get; set; } = null!;
         public Customer Customer { get; set; } = null!;

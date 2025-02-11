@@ -30,7 +30,7 @@ public static class ServiceFactory
             Name = entity.Name,
             PricePerUnit = entity.PricePerUnit,
             Quantity = entity.Quantity,
-
+            Unit = UnitTypeFactory.Create(entity.Unit)
         };
     }
 }
