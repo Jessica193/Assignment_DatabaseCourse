@@ -30,4 +30,14 @@ public static class ServiceFactory
             Unit = UnitTypeFactory.Create(entity.Unit)
         };
     }
+
+    public static ServiceEntity CreateUpdatedEntity(ServiceUpdateForm form, ServiceEntity entity)
+    {
+        return new ServiceEntity()
+        {
+            Id = entity.Id,
+            Name = form.Name,
+            PricePerUnit = form.PricePerUnit,
+        };
+    }
 }

@@ -18,5 +18,7 @@ public class ProjectUpdateForm
     [Required]
     public int QuantityofServiceUnits { get; set; }
 
+    public decimal TotalPrice { get; set; }
+
     //public Service Service { get; set; } = null!; //RÄTT??
 }

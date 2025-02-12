@@ -2,34 +2,89 @@
 using BusinessLibrary.Factories;
 using BusinessLibrary.Interfaces;
 using BusinessLibrary.Models;
+using Data.Interfaces;
+using Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace BusinessLibrary.Services;
 
-public class ServiceService : IServiceService
+public class ServiceService(IServiceRepository serviceRepository) : IServiceService
 {
-    public Task<bool> Create(ServiceRegistrationForm form)
+    private readonly IServiceRepository _serviceRepository = serviceRepository;
+
+    public async Task<bool> Create(ServiceRegistrationForm form)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(form.Name) || form.PricePerUnit == 0) return false;
+
+        var result = await _serviceRepository.ExistsAsync(x => x.Name.ToLower() == form.Name.ToLower());
+        if (result)
+        {
+            return false;
+        }
+        try
+        {
+            await _serviceRepository.CreateAsync(ServiceFactory.Create(form));
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error creating service entity :: {ex.Message}");
+            return false;
+        }
     }
 
-    public Task<bool> DeleteService(int id)
+    public async Task<IEnumerable<Service>> GetAllServicesWithUnitType()
     {
-        throw new NotImplementedException();
+        var entities = await _serviceRepository.GetAllWithDetailsAsync(query => query.Include(s => s.Unit));
+        var services = entities.Select(ServiceFactory.Create).ToList();
+        return services;
     }
 
-    public Task<IEnumerable<Service>> GetAllServicesWithUnitTypes()
+    public async Task<Service?> GetServiceWithUnitTypeById(int id)
     {
-        throw new NotImplementedException();
+        var result = await _serviceRepository.ExistsAsync(x => x.Id == id);
+
+        if (result)
+        {
+            var entity = await _serviceRepository.GetOneWithDetailsAsync(query => query.Include(s => s.Unit), x => x.Id == id);
+            var service = ServiceFactory.Create(entity);
+            return service;
+        }
+        return null;
     }
 
-    public Task<Service?> GetServiceWithUnitTypeById(int id)
+    public async Task<bool> UpdateService(int id, ServiceUpdateForm form)
     {
-        throw new NotImplementedException();
-    }
+        var entity = await _serviceRepository.GetOneAsync(x => x.Id == id);
+        if (entity == null) return false;
 
-    public Task<bool> UpdateService(int id, ServiceUpdateForm form)
+        var updatedEntity = ServiceFactory.CreateUpdatedEntity(form, entity);
+
+        try
+        {
+            await _serviceRepository.UpdateAsync(updatedEntity);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error updating service entity :: {ex.Message}");
+            return false;
+        }
+    }
+    public async Task<bool> DeleteService(int id)
     {
-        throw new NotImplementedException();
+        var entity = await _serviceRepository.GetOneAsync(x => x.Id == id);
+        if (entity == null) return false;
+        try
+        {
+            await _serviceRepository.DeleteAsync(entity);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error deleting service entity :: {ex.Message}");
+            return false;
+        }
     }
 }

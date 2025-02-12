@@ -33,4 +33,15 @@ public static class EmployeeFactory
             Role = RoleFactory.Create(entity.Role),
         };
     }
+
+    public static EmployeeEntity CreateUpdatedEntity(EmployeeUpdateForm form, EmployeeEntity entity)
+    {
+        return new EmployeeEntity()
+        {
+            Id = entity.Id,
+            FirstName = form.FirstName,
+            LastName = form.LastName,
+            Email = form.Email,
+        };
+    }
 }

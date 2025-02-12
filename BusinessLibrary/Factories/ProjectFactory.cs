@@ -29,7 +29,6 @@ public static class ProjectFactory
 
     public static Project Create(ProjectEntity entity)
     {
-        var service = entity.Service;
 
         return new Project()
         {
@@ -39,12 +38,26 @@ public static class ProjectFactory
             StartDate = entity.StartDate,
             EndDate = entity.EndDate,
             QuantityofServiceUnits= entity.QuantityofServiceUnits,
-            TotalPrice = entity.QuantityofServiceUnits * service.PricePerUnit, //Den här vill jag ha redan när jag sparar ner entiteten
+            TotalPrice = entity.QuantityofServiceUnits * entity.Service.PricePerUnit, //Den här vill jag ha redan när jag sparar ner entiteten
             StatusType = StatusTypeFactory.Create(entity.StatusType),
             Service = ServiceFactory.Create(entity.Service),
             Employee = EmployeeFactory.Create(entity.Employee),
             Customer = CustomerFactory.Create(entity.Customer),
         };
     }
-    
+
+    public static ProjectEntity CreateUpdatedEntity(ProjectUpdateForm form, ProjectEntity entity)
+    {
+        return new ProjectEntity()
+        {
+            Id = entity.Id,
+            Name = form.Name,
+            Description = form.Description,
+            StartDate = form.StartDate,
+            EndDate = form.EndDate,
+            QuantityofServiceUnits = form.QuantityofServiceUnits,
+            TotalPrice = form.QuantityofServiceUnits * entity.Service.PricePerUnit,
+        };
+    }
+
 }

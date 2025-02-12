@@ -39,4 +39,13 @@ public static class CustomerFactory
             ContactPersons = contactPersons
         };
     }
+
+    public static CustomerEntity CreateUpdatedEntity(CustomerUpdateForm form, CustomerEntity entity)
+    {
+        return new CustomerEntity()
+        {
+            Id = entity.Id,
+            Name=form.Name
+        };
+    }
 }

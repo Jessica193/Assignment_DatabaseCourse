@@ -27,4 +27,13 @@ public static class RoleFactory
             Name = entity.Name,
         };
     }
+
+    public static RoleEntity CreateUpdatedEntity(RoleUpdateForm form, RoleEntity entity)
+    {
+        return new RoleEntity()
+        {
+            Id = entity.Id,
+            Name = form.Name,
+        };
+    }
 }

@@ -34,4 +34,16 @@ public static class ContactPersonFactory
             PhoneNumber = entity.PhoneNumber,
         };
     }
+
+    public static ContactPersonEntity CreateUpdatedEntity(ContactPersonUpdateForm form, ContactPersonEntity entity)
+    {
+        return new ContactPersonEntity()
+        {
+            Id = entity.Id,
+            FirstName = form.FirstName,
+            LastName = form.LastName,
+            Email = form.Email,
+            PhoneNumber = form.PhoneNumber,
+        };
+    }
 }

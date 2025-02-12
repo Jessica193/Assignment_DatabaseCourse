@@ -1,43 +1,110 @@
 ﻿using BusinessLibrary.Dtos;
+using BusinessLibrary.Factories;
 using BusinessLibrary.Interfaces;
 using BusinessLibrary.Models;
+using Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace BusinessLibrary.Services;
 
-public class CustomerService : ICustomerService
+public class CustomerService(ICustomerRepository customerRepository) : ICustomerService
 {
-    public Task<bool> Create(CustomerRegistrationForm form)
+    private readonly ICustomerRepository _customerRepository = customerRepository;
+
+    public async Task<bool> Create(CustomerRegistrationForm form)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(form.Name)) return false;
+
+        var result = await _customerRepository.ExistsAsync(x => x.Name.ToLower() == form.Name.ToLower());
+        if (result)
+        {
+            return false;
+        }
+        try
+        {
+            await _customerRepository.CreateAsync(CustomerFactory.Create(form));
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error creating customer entity :: {ex.Message}");
+            return false;
+        }
     }
 
-    public Task<bool> DeleteCustomer(int id)
+    public async Task<IEnumerable<Customer>> GetAllCustomer()
     {
-        throw new NotImplementedException();
+        var entities = await _customerRepository.GetAllAsync();
+        var customers = entities.Select(CustomerFactory.Create).ToList();
+        return customers;
     }
 
-    public Task<IEnumerable<Customer>> GetAllCustomer()
+    public async Task<IEnumerable<Customer>> GetAllCustomerWithContactPersons()
     {
-        throw new NotImplementedException();
+        var entities = await _customerRepository.GetAllWithDetailsAsync(query => query.Include(c => c.ContactPerson));
+        var customers = entities.Select(CustomerFactory.Create).ToList();
+        return customers;
     }
 
-    public Task<IEnumerable<Customer>> GetAllCustomerWithContactPersons()
+    public async Task<Customer?> GetCustomerById(int id)
     {
-        throw new NotImplementedException();
+        var result = await _customerRepository.ExistsAsync(x => x.Id == id);
+
+        if (result)
+        {
+            var entity = await _customerRepository.GetOneAsync(x => x.Id == id);
+            var customer = CustomerFactory.Create(entity);
+            return customer;
+        }
+        return null;
     }
 
-    public Task<Customer?> GetCustomerById(int id)
+    public async Task<Customer?> GetCustomerWithContactPersonsById(int id)
     {
-        throw new NotImplementedException();
+        var result = await _customerRepository.ExistsAsync(x => x.Id == id);
+
+        if (result)
+        {
+            var entity = await _customerRepository.GetOneWithDetailsAsync(query => query.Include(c => c.ContactPerson), x => x.Id == id);
+            var customer = CustomerFactory.Create(entity);
+            return customer;
+        }
+        return null;
     }
 
-    public Task<Customer?> GetCustomerWithContactPersonsById(int id)
+    public async Task<bool> UpdateCustomer(int id, CustomerUpdateForm form)
     {
-        throw new NotImplementedException();
+        var entity = await _customerRepository.GetOneAsync(x => x.Id == id);
+        if (entity == null) return false;
+
+        var updatedEntity = CustomerFactory.CreateUpdatedEntity(form, entity);
+
+        try
+        {
+            await _customerRepository.UpdateAsync(updatedEntity);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error updating customer entity :: {ex.Message}");
+            return false;
+        }
     }
 
-    public Task<bool> UpdateCustomer(int id, CustomerUpdateForm form)
+    public async Task<bool> DeleteCustomer(int id)
     {
-        throw new NotImplementedException();
+        var entity = await _customerRepository.GetOneAsync(x => x.Id == id);
+        if (entity == null) return false;
+        try
+        {
+            await _customerRepository.DeleteAsync(entity);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error deleting customer entity :: {ex.Message}");
+            return false;
+        }
     }
 }
