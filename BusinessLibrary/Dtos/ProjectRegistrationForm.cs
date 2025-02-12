@@ -1,6 +1,8 @@
 ﻿using Data.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using BusinessLibrary.Models;
+using BusinessLibrary.Factories;
 
 namespace BusinessLibrary.Dtos
 {
@@ -16,9 +18,10 @@ namespace BusinessLibrary.Dtos
 
         [Required]
         public DateTime EndDate { get; set; }
-        public decimal TotalPrice { get; set; }  
 
+        [Required]
+        public int QuantityofServiceUnits { get; set; }
 
-
+        //public Service Service { get; set; } = null!; //RÄTT??
     }
 }

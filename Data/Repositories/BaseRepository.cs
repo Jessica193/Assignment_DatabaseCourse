@@ -65,37 +65,28 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         return entity ?? null!;
     }
 
-    public async virtual Task<TEntity> UpdateAsync(Expression<Func<TEntity, bool>> predicate, TEntity updatedEntity)
+    public async virtual Task<bool> UpdateAsync(TEntity updatedEntity)
     {
-        if (predicate == null) return null!;
-        if (updatedEntity == null) return null!;
+        if (updatedEntity == null) return false;
         try
         {
-            var existingEntity = await _dbSet.FirstOrDefaultAsync(predicate);
-            if (existingEntity == null) return null!;
-
-            _context.Entry(existingEntity).CurrentValues.SetValues(updatedEntity);
+            _dbSet.Update(updatedEntity);
             await _context.SaveChangesAsync();
-            return existingEntity;
+            return true;
 
         }
         catch (Exception ex)
         {
             Debug.WriteLine($"Error updating {nameof(TEntity)} entity :: {ex.Message}");
-            return null!;
+            return false;
         }
     }
 
-    public async virtual Task<bool> DeleteAsync(Expression<Func<TEntity, bool>> predicate)
+    public async virtual Task<bool> DeleteAsync(TEntity entity)
     {
-        if (predicate == null) return false;
-
         try
         {
-            var existingEntity = await _dbSet.FirstOrDefaultAsync(predicate);
-            if (existingEntity == null) return false;
-           
-            _dbSet.Remove(existingEntity);
+            _dbSet.Remove(entity);
             await _context.SaveChangesAsync();
             return true;
            

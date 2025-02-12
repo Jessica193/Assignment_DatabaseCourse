@@ -17,8 +17,6 @@ public static class ServiceFactory
         {
             Name = form.Name,
             PricePerUnit = form.PricePerUnit,
-            Quantity = form.Quantity,
-            
         };
     }
 
@@ -29,7 +27,6 @@ public static class ServiceFactory
             Id = entity.Id,
             Name = entity.Name,
             PricePerUnit = entity.PricePerUnit,
-            Quantity = entity.Quantity,
             Unit = UnitTypeFactory.Create(entity.Unit)
         };
     }

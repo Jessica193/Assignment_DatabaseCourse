@@ -20,6 +20,12 @@ public class ProjectEntity
     [Required]
     public DateTime EndDate { get; set; }
 
+    [Required]
+    public int QuantityofServiceUnits { get; set; }
+
+    [Required]
+    public decimal TotalPrice { get; set; }
+
     public int CustomerId {  get; set; }
     public int EmployeeId { get; set; }
     public int ServiceId { get; set; }
@@ -30,6 +36,6 @@ public class ProjectEntity
     public EmployeeEntity Employee { get; set; } = null!;
     public CustomerEntity Customer { get; set; } = null!;
 
-    public decimal TotalPrice { get; set; }
+   
 
 }

@@ -26,8 +26,9 @@ public class ContactPersonEntity
     [Column(TypeName = "varchar(30)")]
     public string PhoneNumber { get; set; } = null!;
 
-    public int CustomerId { get; set; }
+
 
     [ForeignKey("CustomerId")]
+    public int CustomerId { get; set; }
     public CustomerEntity Customer { get; set; } = null!;
 }

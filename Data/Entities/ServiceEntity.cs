@@ -16,13 +16,10 @@ public class ServiceEntity
     public string Name { get; set; } = null!;
 
     [Required]
-    public decimal PricePerUnit { get; set; } 
+    public decimal PricePerUnit { get; set; }
 
     [Required]
     public int UnitTypeId { get; set; }
-
-    [Required]
-    public int Quantity {  get; set; }
 
     public UnitTypeEntity Unit { get; set; } = null!;
 }

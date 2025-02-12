@@ -27,4 +27,13 @@ public static class StatusTypeFactory
             Status = entity.Status,
         };
     }
+
+    public static StatusTypeEntity CreateUpdatedEntity(StatusTypeUpdateForm form, StatusTypeEntity entity)
+    {
+        return new StatusTypeEntity()
+        {
+            Id = entity.Id,
+            Status = form.Status,
+        };
+    }
 }

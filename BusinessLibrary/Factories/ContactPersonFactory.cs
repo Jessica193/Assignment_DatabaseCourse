@@ -19,7 +19,6 @@ public static class ContactPersonFactory
             LastName = form.LastName,
             Email = form.Email,
             PhoneNumber = form.PhoneNumber,
-
         };
     }
 

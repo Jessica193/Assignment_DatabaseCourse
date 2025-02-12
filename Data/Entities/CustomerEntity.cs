@@ -14,6 +14,8 @@ public class CustomerEntity
     [Column(TypeName = "nvarchar(100)")]
     public string Name { get; set; } = null!;
 
+
+
     public ICollection<ContactPersonEntity> ContactPerson { get; set; } = null!;
 
     public ICollection<ProjectEntity> Projects { get; set; } = [];

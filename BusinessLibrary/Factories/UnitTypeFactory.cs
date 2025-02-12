@@ -28,7 +28,12 @@ public static class UnitTypeFactory
         };
     }
 
-
-
-
+    public static UnitTypeEntity CreateUpdatedEntity(UnitTypeUpdateForm form, UnitTypeEntity entity)
+    {
+        return new UnitTypeEntity()
+        {
+            Id = entity.Id,
+            Unit = form.Unit,
+        };
+    }
 }
