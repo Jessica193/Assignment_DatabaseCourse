@@ -8,6 +8,7 @@ public class ServiceUpdateForm
     public string Name { get; set; } = null!;
 
     [Required]
+    [Range(0.01, double.MaxValue, ErrorMessage = "Price per unit must be greater than zero")]
     public decimal PricePerUnit { get; set; }
 }
 

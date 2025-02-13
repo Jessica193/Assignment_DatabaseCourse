@@ -22,4 +22,6 @@ public class ServiceEntity
     public int UnitTypeId { get; set; }
 
     public UnitTypeEntity Unit { get; set; } = null!;
+
+    public ICollection<ProjectEntity> Projects { get; set; } = [];
 }

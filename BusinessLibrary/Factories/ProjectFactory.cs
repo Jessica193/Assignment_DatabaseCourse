@@ -13,8 +13,6 @@ public static class ProjectFactory
 
     public static ProjectEntity Create(ProjectRegistrationForm form)
     {
-        //var service = form.Service;
-
         return new ProjectEntity()
         {
             Name = form.Name,
@@ -22,8 +20,7 @@ public static class ProjectFactory
             StartDate = form.StartDate,
             EndDate = form.EndDate,
             QuantityofServiceUnits = form.QuantityofServiceUnits,
-
-            //TotalPrice = service.PricePerUnit * service.Quantity //håller på! Fråga chatgpt. RÄTT??
+            // TotalPrice = form.QuantityofServiceUnits * form.Service.PricePerUnit Går inte för jag har inte tillgång till Service
         };
     }
 

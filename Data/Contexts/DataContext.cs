@@ -14,4 +14,39 @@ public class DataContext(DbContextOptions<DataContext> options) : DbContext(opti
     public DbSet<CustomerEntity> Customers { get; set; }
     public DbSet<ContactPersonEntity> ContactPersons { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ProjectEntity>()
+            .HasOne(p => p.Customer)
+            .WithMany(c => c.Projects)
+            .HasForeignKey(p => p.CustomerId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ProjectEntity>()
+            .HasOne(p => p.Employee)
+            .WithMany(e => e.Projects)
+            .HasForeignKey(p => p.EmployeeId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ProjectEntity>()
+            .HasOne(p => p.Service)
+            .WithMany(s => s.Projects)
+            .HasForeignKey(p => p.ServiceId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ProjectEntity>()
+            .HasOne(p => p.StatusType)
+            .WithMany(st => st.Projects)
+            .HasForeignKey(p => p.StatusTypeId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ContactPersonEntity>()
+            .HasOne(cp => cp.Customer)
+            .WithMany(c => c.ContactPersons)
+            .HasForeignKey(cp => cp.CustomerId)
+            .OnDelete(DeleteBehavior.Restrict);
+            
+
+        base.OnModelCreating(modelBuilder);
+    }
 }

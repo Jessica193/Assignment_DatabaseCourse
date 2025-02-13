@@ -16,7 +16,7 @@ public class CustomerEntity
 
 
 
-    public ICollection<ContactPersonEntity> ContactPerson { get; set; } = null!;
+    public ICollection<ContactPersonEntity> ContactPersons { get; set; } = [];
 
     public ICollection<ProjectEntity> Projects { get; set; } = [];
 }

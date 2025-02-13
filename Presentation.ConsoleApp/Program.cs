@@ -19,7 +19,7 @@ var options = new JsonSerializerOptions()
 
 var services = new ServiceCollection();
 
-services.AddDbContext<DataContext>(options => options.UseSqlite("Data Source=my_database.db"));
+services.AddDbContext<DataContext>(dbOptions => dbOptions.UseSqlite("Data Source=my_database.db"));
 
 services.AddScoped<IProjectRepository, ProjectRepository>();
 services.AddScoped<ICustomerRepository, CustomerRepository>();

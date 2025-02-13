@@ -12,6 +12,7 @@ public class EmployeeUpdateForm
     public string LastName { get; set; } = null!;
 
     [Required]
+    [EmailAddress(ErrorMessage = "Invalid email format")]
     public string Email { get; set; } = null!;
 }
 

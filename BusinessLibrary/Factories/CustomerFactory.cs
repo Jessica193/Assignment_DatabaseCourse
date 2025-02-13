@@ -23,7 +23,7 @@ public static class CustomerFactory
     {
         var contactPersons = new List<ContactPerson>();
 
-        foreach (var row in entity.ContactPerson)
+        foreach (var row in entity.ContactPersons)
             contactPersons.Add(new ContactPerson
             {
                 FirstName = row.FirstName,

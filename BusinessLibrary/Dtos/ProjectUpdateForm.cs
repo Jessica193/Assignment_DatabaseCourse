@@ -16,9 +16,9 @@ public class ProjectUpdateForm
     public DateTime EndDate { get; set; }
 
     [Required]
+    [Range(1, int.MaxValue, ErrorMessage = "Quantity must be at least 1")]
     public int QuantityofServiceUnits { get; set; }
 
     public decimal TotalPrice { get; set; }
 
-    //public Service Service { get; set; } = null!; //RÄTT??
 }

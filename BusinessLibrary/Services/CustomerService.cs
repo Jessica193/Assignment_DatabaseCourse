@@ -42,7 +42,7 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
 
     public async Task<IEnumerable<Customer>> GetAllCustomerWithContactPersons()
     {
-        var entities = await _customerRepository.GetAllWithDetailsAsync(query => query.Include(c => c.ContactPerson));
+        var entities = await _customerRepository.GetAllWithDetailsAsync(query => query.Include(c => c.ContactPersons));
         var customers = entities.Select(CustomerFactory.Create).ToList();
         return customers;
     }
@@ -66,7 +66,7 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
 
         if (result)
         {
-            var entity = await _customerRepository.GetOneWithDetailsAsync(query => query.Include(c => c.ContactPerson), x => x.Id == id);
+            var entity = await _customerRepository.GetOneWithDetailsAsync(query => query.Include(c => c.ContactPersons), x => x.Id == id);
             var customer = CustomerFactory.Create(entity);
             return customer;
         }

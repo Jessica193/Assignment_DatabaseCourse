@@ -1,5 +1,4 @@
-﻿using Data.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace BusinessLibrary.Models;
