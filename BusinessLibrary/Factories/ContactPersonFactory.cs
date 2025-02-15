@@ -1,6 +1,7 @@
 ﻿using BusinessLibrary.Dtos;
 using BusinessLibrary.Models;
 using Data.Entities;
+using System.Runtime.Serialization;
 
 namespace BusinessLibrary.Factories;
 
@@ -19,6 +20,7 @@ public static class ContactPersonFactory
             LastName = form.LastName,
             Email = form.Email,
             PhoneNumber = form.PhoneNumber,
+            CustomerId = form.CustomerId,
         };
     }
 
@@ -32,6 +34,10 @@ public static class ContactPersonFactory
             LastName = entity.LastName,
             Email = entity.Email,
             PhoneNumber = entity.PhoneNumber,
+            CustomerId= entity.CustomerId,
+
+            //Nytt
+            Customer = CustomerFactory.Create(entity.Customer),
         };
     }
 
@@ -44,6 +50,7 @@ public static class ContactPersonFactory
             LastName = form.LastName,
             Email = form.Email,
             PhoneNumber = form.PhoneNumber,
+            CustomerId = entity.CustomerId,
         };
     }
 }

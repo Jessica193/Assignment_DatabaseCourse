@@ -21,8 +21,8 @@ public class EmployeeEntity
     [Required]
     [Column(TypeName = "varchar(150)")]
     public string Email { get; set; } = null!;
-    public int RoleId { get; set; }
 
+    public int RoleId { get; set; }
     public RoleEntity Role { get; set; } = null!;
 
     public ICollection<ProjectEntity> Projects { get; set; } = [];

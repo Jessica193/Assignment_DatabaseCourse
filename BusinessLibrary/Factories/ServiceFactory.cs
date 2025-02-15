@@ -17,17 +17,40 @@ public static class ServiceFactory
         {
             Name = form.Name,
             PricePerUnit = form.PricePerUnit,
+            UnitTypeId = form.UnitTypeId,
         };
     }
 
     public static Service Create(ServiceEntity entity)
     {
+        var projects = new List<Project>();
+
+        foreach (var row in entity.Projects)
+        {
+            projects.Add(new Project()
+            {
+                Name = row.Name,
+                Description = row.Description,
+                StartDate = row.StartDate,
+                EndDate = row.EndDate,
+                QuantityofServiceUnits = row.QuantityofServiceUnits,
+                TotalPrice = row.TotalPrice, //behövs något göras här?
+                CustomerId = row.CustomerId,
+                StatusTypeId = row.StatusTypeId,
+                EmployeeId = row.EmployeeId,
+                ServiceId = row.ServiceId
+            });
+        }
+
+
         return new Service()
         {
             Id = entity.Id,
             Name = entity.Name,
             PricePerUnit = entity.PricePerUnit,
-            Unit = UnitTypeFactory.Create(entity.Unit)
+            UnitTypeId = entity.UnitTypeId,
+            Unit = UnitTypeFactory.Create(entity.Unit),
+            Projects = projects
         };
     }
 
@@ -38,6 +61,7 @@ public static class ServiceFactory
             Id = entity.Id,
             Name = form.Name,
             PricePerUnit = form.PricePerUnit,
+            UnitTypeId = entity.UnitTypeId
         };
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Presentation.ConsoleApp.Interfaces
 {
-    public interface IMenuDialogs
+    public interface ICustomerDialogs
     {
         Task Run();
     }

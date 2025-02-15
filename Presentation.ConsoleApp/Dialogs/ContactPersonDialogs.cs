@@ -1,0 +1,272 @@
+﻿using BusinessLibrary.Dtos;
+using BusinessLibrary.Factories;
+using BusinessLibrary.Interfaces;
+using BusinessLibrary.Models;
+using BusinessLibrary.Services;
+using Presentation.ConsoleApp.Interfaces;
+using System.Transactions;
+
+namespace Presentation.ConsoleApp.Dialogs;
+
+public class ContactPersonDialogs(IContactPersonService contactPersonService, ICustomerService customerService) : IContactPersonDialogs
+{
+    private readonly IContactPersonService _contactPersonService = contactPersonService;
+    private readonly ICustomerService _customerService = customerService;
+
+ 
+
+    public async Task Run()
+    {
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("**** CONTACT PERSON MENU *****");
+            Console.WriteLine("");
+            Console.WriteLine("1. Create a contact person");
+            Console.WriteLine("2. View all contact persons");
+            Console.WriteLine("3. View one contact person");
+            Console.WriteLine("4. Update a contact person");
+            Console.WriteLine("5. Delete a contact person");
+            Console.WriteLine("6. Back to main menu");
+            Console.WriteLine("7. Quit application");
+            Console.WriteLine("----------------------------------------");
+            Console.Write("Enter your option: ");
+
+            var option = Console.ReadLine()!;
+
+            switch (option)
+            {
+                case "1":
+                    await CreateContactPerson();
+                    break;
+                case "2":
+                    await ViewAllContactPersons();
+                    break;
+                case "3":
+                    await ViewOneContactPerson();
+                    break;
+                case "4":
+                    await UpdateContactPerson();
+                    break;
+                case "5":
+                    await DeleteContactPerson();
+                    break;
+                case "6":
+                    return;
+                case "7":
+                    QuitApplication();
+                    break;
+                default:
+                    Console.Clear();
+                    Console.WriteLine("You must enter a valid option");
+                    Console.ReadKey();
+                    break;
+            }
+        }
+
+        
+    }
+
+    public async Task CreateContactPerson()
+    {
+        Console.Clear();
+        var contactPersonRegistrationform = ContactPersonFactory.Create();
+
+        Console.WriteLine("***** LIST OF CUSTOMERS *****");
+        Console.WriteLine("");
+        var customers = await _customerService.GetAllCustomer();
+
+        foreach (var customer in customers)
+        { Console.WriteLine($"Customer ID: {customer.Id}, Customer name: {customer.Name}"); }
+        Console.WriteLine(""); 
+        Console.WriteLine("");
+
+        int id;
+        Console.WriteLine("The contact person you want to create represents the company with ID-number: ");
+        while (!int.TryParse(Console.ReadLine(), out id))
+        {
+            Console.Write("Invalid input! Please enter a valid ID: ");
+        }
+
+        contactPersonRegistrationform.CustomerId = id;
+
+        Console.WriteLine("***** Information absout the contact person *****");
+
+        Console.Write("First name: ");
+        contactPersonRegistrationform.FirstName = Console.ReadLine()!.Trim();
+        Console.WriteLine("");
+
+        Console.Write("Last name: ");
+        contactPersonRegistrationform.LastName = Console.ReadLine()!.Trim();
+        Console.WriteLine("");
+
+        Console.Write("Email: ");
+        contactPersonRegistrationform.Email = Console.ReadLine()!.Trim();
+        Console.WriteLine("");
+
+        Console.Write("Phone number: ");
+        contactPersonRegistrationform.PhoneNumber = Console.ReadLine()!.Trim();
+        Console.WriteLine("");
+
+        var result = await _contactPersonService.Create(contactPersonRegistrationform);
+        if (result)
+        {
+            Console.WriteLine("Contact person was successfully created");
+        }
+        else
+        {
+            Console.WriteLine("Contact person was not created");
+        }
+
+        Console.Write("Press any key to continue");
+        Console.ReadKey();
+    }
+
+
+    public async Task ViewAllContactPersons()
+    {
+
+        Console.Clear();
+        var contactPersons = await _contactPersonService.GetAllContactPersons();
+
+        if (contactPersons.Any())
+        {
+            foreach (var contactPerson in contactPersons)
+            {
+                Console.WriteLine($"ID: {contactPerson.Id}, Name: {contactPerson.FirstName} {contactPerson.LastName}, Email: {contactPerson.Email}, Phone number: {contactPerson.PhoneNumber}, CustomerId: {contactPerson.CustomerId}");
+                Console.WriteLine("");
+            }
+        }
+        else
+        {
+            Console.WriteLine("No contact persons found");
+        }
+
+        Console.Write("Press any key to continue");
+        Console.ReadKey();
+
+
+    }
+
+    public async Task ViewOneContactPerson()
+    {
+        Console.Clear();
+        int id;
+        Console.WriteLine("Enter the ID-number for the contact person you would like to view.");
+        while (!int.TryParse(Console.ReadLine(), out id))
+        {
+            Console.Write("Invalid input! Please enter a valid ID: ");
+        }
+        var contactPerson = await _contactPersonService.GetContactPersonById(id);
+        if (contactPerson != null)
+        {
+            Console.WriteLine($"ID: {contactPerson.Id}, Name: {contactPerson.FirstName} {contactPerson.LastName}, Email: {contactPerson.Email}, Phone number: {contactPerson.PhoneNumber}, CustomerId: {contactPerson.CustomerId}");
+        }
+        else
+        {
+            Console.WriteLine("Contact person was not found");
+        }
+
+        Console.Write("Press any key to continue");
+        Console.ReadKey();
+    }
+
+    public async Task UpdateContactPerson()
+    {
+        Console.Clear();
+
+        Console.WriteLine("***** LIST OF CONTACT PERSONS *****");
+        var contactPersons = await _contactPersonService.GetAllContactPersons();
+        foreach (var contactPerson in contactPersons)
+        {
+            Console.WriteLine($"ID: {contactPerson.Id}, Name: {contactPerson.FirstName} {contactPerson.LastName}    Email: {contactPerson.Email}   Phone number: {contactPerson.PhoneNumber}");
+            Console.WriteLine("");
+        }
+        Console.WriteLine("---------------------------------------");
+
+        int id;
+        Console.WriteLine("Enter the ID-number for the contact person you would like to update.");
+        while (!int.TryParse(Console.ReadLine(), out id))
+        {
+            Console.Write("Invalid input! Please enter a valid ID: ");
+        }
+
+        var contactPersonUpdateForm = new ContactPersonUpdateForm();
+        Console.Write($"Change first name to: ");
+        contactPersonUpdateForm.FirstName = Console.ReadLine()!.Trim();
+
+        Console.Write($"Change last name to: ");
+        contactPersonUpdateForm.LastName = Console.ReadLine()!.Trim();
+
+        Console.Write($"Change email to: ");
+        contactPersonUpdateForm.Email = Console.ReadLine()!.Trim();
+
+        Console.Write($"Change phone number to: ");
+        contactPersonUpdateForm.PhoneNumber = Console.ReadLine()!.Trim();
+
+        var result = await _contactPersonService.UpdateContactPerson(id, contactPersonUpdateForm);
+        if (result)
+        {
+            Console.WriteLine("Contact person was successfully updated");
+        }
+        else
+        {
+            Console.WriteLine("Contact person was not updated");
+        }
+        Console.Write("Press any key to continue");
+        Console.ReadKey();
+    }
+
+    public async Task DeleteContactPerson()
+    {
+        Console.Clear();
+        Console.WriteLine("***** LIST OF CONTACT PERSONS *****");
+        var contactPersons = await _contactPersonService.GetAllContactPersons();
+        foreach (var contactPerson in contactPersons)
+        {
+            Console.WriteLine($"ID: {contactPerson.Id}, Name: {contactPerson.FirstName} {contactPerson.LastName}, Email: {contactPerson.Email}, Phone number: {contactPerson.PhoneNumber}, CustomerId: {contactPerson.CustomerId}");
+            Console.WriteLine("");
+        }
+        Console.WriteLine("---------------------------------------");
+
+        int id;
+        Console.WriteLine("Enter the ID-number for the contact person you would like to delete.");
+        while (!int.TryParse(Console.ReadLine(), out id))
+        {
+            Console.Write("Invalid input! Please enter a valid ID: ");
+        }
+
+        var result = await _contactPersonService.DeleteContactPerson(id);
+        if (result)
+        {
+            Console.WriteLine("Contact person was successfully deleted");
+        }
+        else
+        {
+            Console.WriteLine("Contact person was not deleted");
+        }
+        Console.Write("Press any key to continue");
+        Console.ReadKey();
+    }
+
+    public void QuitApplication()
+    {
+        {
+            Console.Clear();
+            Console.Write("Do you want to qiut this application (y/n): ");
+            string answer = Console.ReadLine()!.ToLower().Trim();
+
+            if (string.IsNullOrEmpty(answer))
+            {
+                Console.WriteLine("You must enter a valid option");
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey();
+            }
+            else if (answer == "y")
+            {
+                Environment.Exit(0);
+            }
+        }
+    }
+
+}

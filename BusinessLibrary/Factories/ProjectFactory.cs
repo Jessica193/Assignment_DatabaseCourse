@@ -21,6 +21,10 @@ public static class ProjectFactory
             EndDate = form.EndDate,
             QuantityofServiceUnits = form.QuantityofServiceUnits,
             // TotalPrice = form.QuantityofServiceUnits * form.Service.PricePerUnit Går inte för jag har inte tillgång till Service
+            CustomerId = form.CustomerId,
+            EmployeeId = form.EmployeeId,
+            ServiceId = form.ServiceId,
+            StatusTypeId = form.StatusTypeId,
         };
     }
 
@@ -36,6 +40,12 @@ public static class ProjectFactory
             EndDate = entity.EndDate,
             QuantityofServiceUnits= entity.QuantityofServiceUnits,
             TotalPrice = entity.QuantityofServiceUnits * entity.Service.PricePerUnit, //Den här vill jag ha redan när jag sparar ner entiteten
+            CustomerId = entity.CustomerId,
+            EmployeeId = entity.EmployeeId,
+            ServiceId = entity.ServiceId,
+            StatusTypeId = entity.StatusTypeId,
+
+            //nytt
             StatusType = StatusTypeFactory.Create(entity.StatusType),
             Service = ServiceFactory.Create(entity.Service),
             Employee = EmployeeFactory.Create(entity.Employee),
@@ -54,6 +64,10 @@ public static class ProjectFactory
             EndDate = form.EndDate,
             QuantityofServiceUnits = form.QuantityofServiceUnits,
             TotalPrice = form.QuantityofServiceUnits * entity.Service.PricePerUnit,
+            CustomerId = entity.CustomerId,
+            EmployeeId = entity.EmployeeId,
+            ServiceId = entity.ServiceId,
+            StatusTypeId = entity.StatusTypeId,
         };
     }
 

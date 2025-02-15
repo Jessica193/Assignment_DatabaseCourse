@@ -21,6 +21,7 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
         {
             return false;
         }
+
         try
         {
             await _customerRepository.CreateAsync(CustomerFactory.Create(form));

@@ -13,4 +13,6 @@ public class UnitTypeEntity
     [Required]
     [Column(TypeName = "nvarchar(20)")]
     public string Unit { get; set; } = null!;
+
+    public ICollection<ServiceEntity> Services { get; set; } = [];
 }

@@ -21,10 +21,31 @@ public static class StatusTypeFactory
 
     public static StatusType Create(StatusTypeEntity entity)
     {
+        var projects = new List<Project>();
+
+        foreach (var row in entity.Projects)
+        {
+            projects.Add(new Project()
+            {
+                Name = row.Name,
+                Description = row.Description,
+                StartDate = row.StartDate,
+                EndDate = row.EndDate,
+                QuantityofServiceUnits = row.QuantityofServiceUnits,
+                TotalPrice = row.TotalPrice, //behövs något göras här?
+                CustomerId = row.CustomerId,
+                StatusTypeId = row.StatusTypeId,
+                EmployeeId = row.EmployeeId,
+                ServiceId = row.ServiceId
+            });
+        }
+
+
         return new StatusType()
         {
             Id = entity.Id,
             Status = entity.Status,
+            Projects = projects
         };
     }
 

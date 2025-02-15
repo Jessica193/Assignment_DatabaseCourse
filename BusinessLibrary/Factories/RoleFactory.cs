@@ -21,10 +21,26 @@ public static class RoleFactory
 
     public static Role Create(RoleEntity entity)
     {
+        var employees = new List<Employee>();
+
+        foreach (var row in entity.Employees)
+        {
+            employees.Add(new Employee()
+            {
+                Id = row.Id,
+                FirstName = row.FirstName,
+                LastName = row.LastName,
+                Email = row.Email,
+                RoleId = row.RoleId,
+            });
+        }
+
+
         return new Role()
         {
             Id = entity.Id,
             Name = entity.Name,
+            Employees = employees
         };
     }
 

@@ -3,6 +3,7 @@ using BusinessLibrary.Factories;
 using BusinessLibrary.Interfaces;
 using BusinessLibrary.Models;
 using Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace BusinessLibrary.Services;
@@ -38,6 +39,20 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
         var contactPersons = entities.Select(ContactPersonFactory.Create).ToList();
         return contactPersons;
     }
+
+
+
+    //NYTT + i interfacet
+    public async Task<IEnumerable<ContactPerson>> GetAllContactPersonsWithCustomersAsync()
+    {
+        var entities = await _contactPersonRepository.GetAllWithDetailsAsync(query => query.Include(cp => cp.Customer));
+        var contactPersons = entities.Select(ContactPersonFactory.Create).ToList();
+        return contactPersons;
+    }
+
+    //
+
+
 
     public async Task<ContactPerson?> GetContactPersonById(int id)
     {

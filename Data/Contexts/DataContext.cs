@@ -45,7 +45,20 @@ public class DataContext(DbContextOptions<DataContext> options) : DbContext(opti
             .WithMany(c => c.ContactPersons)
             .HasForeignKey(cp => cp.CustomerId)
             .OnDelete(DeleteBehavior.Restrict);
-            
+
+        modelBuilder.Entity<EmployeeEntity>()
+            .HasOne(e => e.Role)
+            .WithMany(r => r.Employees)
+            .HasForeignKey(e => e.RoleId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ServiceEntity>()
+           .HasOne(s => s.Unit)
+           .WithMany(ut => ut.Services)
+           .HasForeignKey(s => s.UnitTypeId)
+           .OnDelete(DeleteBehavior.Restrict);
+
+
 
         base.OnModelCreating(modelBuilder);
     }

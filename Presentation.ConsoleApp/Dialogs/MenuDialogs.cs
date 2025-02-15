@@ -1,4 +1,5 @@
-﻿using BusinessLibrary.Dtos;
+﻿using Azure;
+using BusinessLibrary.Dtos;
 using BusinessLibrary.Factories;
 using BusinessLibrary.Interfaces;
 using Data.Entities;
@@ -6,7 +7,7 @@ using Presentation.ConsoleApp.Interfaces;
 
 namespace Presentation.ConsoleApp.Dialogs;
 
-public class MenuDialogs(IProjectService projectService, ICustomerService customerService, IContactPersonService contactPersonService, IServiceService serviceService, IUnitTypeService unitTypeService, IEmployeeService employeeService, IRoleService roleService, IStatusTypeService statusTypeService) : IMenuDialogs
+public class MenuDialogs(IProjectService projectService, ICustomerService customerService, IContactPersonService contactPersonService, IServiceService serviceService, IUnitTypeService unitTypeService, IEmployeeService employeeService, IRoleService roleService, IStatusTypeService statusTypeService, ICustomerDialogs customerDialogs, IContactPersonDialogs contactPersonDialogs) : IMenuDialogs
 {
     private readonly IProjectService _projectService = projectService;
     private readonly ICustomerService _customerService = customerService;
@@ -16,82 +17,120 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
     private readonly IEmployeeService _employeeService = employeeService;
     private readonly IRoleService _roleService = roleService;
     private readonly IStatusTypeService _statusTypeService = statusTypeService;
+    private readonly ICustomerDialogs _customerDialogs = customerDialogs;
+    private readonly IContactPersonDialogs _contactPersonDialogs = contactPersonDialogs;
 
-    public void Run()
+
+
+    //public void Run()
+    //{
+    //    while (true)
+    //    {
+    //        Console.Clear();
+    //        var option = MainMenu();
+    //        if (!string.IsNullOrEmpty(option))
+    //        {
+    //            OptionSwitch(option);
+    //        }
+    //        else
+    //        {
+    //            Console.Clear();
+    //            Console.WriteLine("You must enter an option");
+    //        }
+    //    }
+    //}
+
+    public async Task Run()
     {
+
         while (true)
         {
             Console.Clear();
-            var option = MainMenu();
-            if (!string.IsNullOrEmpty(option))
-            {
-                OptionSwitch(option);
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("You must enter an option");
-            }
-        }
-    }
-
-    public string MainMenu()
-    {
-        
-            Console.Clear();
             Console.WriteLine("**** MAIN MENU *****");
             Console.WriteLine("");
-            Console.WriteLine("1. Create a project");
-            Console.WriteLine("2. View all projects");
-            Console.WriteLine("3. View one project");
-            Console.WriteLine("4. Update project");
-            Console.WriteLine("5. Delete project");
-            Console.WriteLine("6. Quit application");
+            Console.WriteLine("1. Manage customers");
+            Console.WriteLine("2. Manage customer contact persons");
+            Console.WriteLine("3. Manage Employees");
+            Console.WriteLine("4. Manage employee roles");
+            Console.WriteLine("5. Manage Services");
+            Console.WriteLine("6. Manage status types");
+            Console.WriteLine("7. Manage service unit types");
+            Console.WriteLine("8. Manage Projects");
+            Console.WriteLine("9. Quit application");
             Console.WriteLine("----------------------------------------");
             Console.Write("Enter your option: ");
 
             var option = Console.ReadLine()!;
-            return option;
+            //return option;
+            switch (option)
+            {
+                case "1":
+                    await _customerDialogs.Run();
+                    break;
+                case "2":
+                    await _contactPersonDialogs.Run();
+                    break;
+                case "3":
+                    await ViewOneProject();
+                    break;
+                case "4":
+                    await UpdateProject();
+                    break;
+                case "5":
+                    await DeleteProject();
+                    break;
+                case "6":
+                    await QuitApplication();
+                    break;
+                default:
+                    Console.Clear();
+                    Console.WriteLine("You must enter a valid option, press any key to continue");
+                    Console.ReadKey();
+                    break;
+            }
+
+        }
+        
       
     }
 
-    public void OptionSwitch(string option)
-    {
-        switch (option)
-        {
-            case "1":
-                CreateProject();
-                break;
-            case "2":
-                ViewAllProjects();
-                break;
-            case "3":
-                ViewOneProject();
-                break;
-            case "4":
-                UpdateProject();
-                break;
-            case "5":
-                DeleteProject();
-                break;
-            case "6":
-                QuitApplication();
-                break;
-            default:
-                Console.Clear();
-                Console.WriteLine("You must enter a valid option");
-                Console.ReadKey();
-                break;
-        }
-    }
+    //public void OptionSwitch(string option)
+    //{
+    //    switch (option)
+    //    {
+    //        case "1":
+    //            _customerDialogs.Run();
+    //            break;
+    //        case "2":
+    //            ViewAllProjects();
+    //            break;
+    //        case "3":
+    //            ViewOneProject();
+    //            break;
+    //        case "4":
+    //            UpdateProject();
+    //            break;
+    //        case "5":
+    //            DeleteProject();
+    //            break;
+    //        case "6":
+    //            QuitApplication();
+    //            break;
+    //        default:
+    //            Console.Clear();
+    //            Console.WriteLine("You must enter a valid option");
+    //            Console.ReadKey();
+    //            break;
+    //    }
+    //}
 
 
-    public void CreateProject2()
-    {
-        var form = new ProjectRegistrationForm();
+    //public void CreateProject2()
+    //{
+    //    var form = new ProjectRegistrationForm();
 
-        Console.WriteLine("Name");
-        form.Name = Console.ReadLine()!;
+    //    Console.WriteLine("Name");
+    //    form.Name = Console.ReadLine()!;
 
 
         // Välj status: 
@@ -118,25 +157,25 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
 
         // var serviceModel = serviceService.CreateService(serviceFactory(form.Service, form.Unit))
 
-        var projectEntity = new ProjectEntity
-        {
-            Name = form.Name,
-            Description = form.Description,
-            StartDate = form.StartDate,
-            EndDate = form.EndDate,
-            QuantityofServiceUnits = form.QuantityofServiceUnits,
-            TotalPrice = 100,
-           // CustomerId = form.customerId
-           //StatusTypeId = form.statusId
-           //ServiceId = serviceModel.Id
-        };
+    //    var projectEntity = new ProjectEntity
+    //    {
+    //        Name = form.Name,
+    //        Description = form.Description,
+    //        StartDate = form.StartDate,
+    //        EndDate = form.EndDate,
+    //        QuantityofServiceUnits = form.QuantityofServiceUnits,
+    //        TotalPrice = 100,
+    //       // CustomerId = form.customerId
+    //       //StatusTypeId = form.statusId
+    //       //ServiceId = serviceModel.Id
+    //    };
 
        
 
-        // projectRepository.CreateProjectAsync(projectEntity)
-    }
+    //    // projectRepository.CreateProjectAsync(projectEntity)
+    //}
 
-    public void CreateProject()
+    public async Task CreateProject()
     {
         var projectForm = ProjectFactory.Create();
         var customerForm = CustomerFactory.Create();
@@ -310,35 +349,35 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
         Console.ReadKey();
     }
 
-    public void ViewAllProjects()
+    public async Task ViewAllProjects()
     {
         Console.Clear();
-        _projectService.GetAllProjectsWithDetails(); 
+        await _projectService.GetAllProjectsWithDetails(); 
         Console.ReadKey();
     }
 
-    public void ViewOneProject()
+    public async Task ViewOneProject()
     {
         Console.Clear();
         Console.WriteLine("Metod view one");
         Console.ReadKey();
     }
 
-    public void UpdateProject()
+    public async Task UpdateProject()
     {
         Console.Clear();
         Console.WriteLine("Metod update");
         Console.ReadKey();
     }
 
-    public void DeleteProject()
+    public async Task DeleteProject()
     {
         Console.Clear();
         Console.WriteLine("Metod delete");
         Console.ReadKey();
     }
 
-    public void QuitApplication()
+    public async Task QuitApplication()
     {
         Console.Clear();
         Console.WriteLine("Metod quit");

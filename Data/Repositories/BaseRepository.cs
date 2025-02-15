@@ -31,8 +31,16 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
 
     public async virtual Task<IEnumerable<TEntity>> GetAllAsync()
     {
-        var entities = await _dbSet.ToListAsync();
-        return entities;
+        try
+        {
+            var entities = await _dbSet.ToListAsync();
+            return entities;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
     public async virtual Task<IEnumerable<TEntity>> GetAllWithDetailsAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpression)

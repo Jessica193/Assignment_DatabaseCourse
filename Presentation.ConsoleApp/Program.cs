@@ -1,4 +1,5 @@
-﻿using BusinessLibrary.Interfaces;
+﻿using BusinessLibrary.Factories;
+using BusinessLibrary.Interfaces;
 using BusinessLibrary.Services;
 using Data.Contexts;
 using Data.Interfaces;
@@ -11,15 +12,18 @@ using System.Security.Authentication.ExtendedProtection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+
+//Detta måste användas någonstans, var? kolla om video!
 var options = new JsonSerializerOptions()
 {
     WriteIndented = true,
     ReferenceHandler = ReferenceHandler.Preserve
 };
+//
 
 var services = new ServiceCollection();
 
-services.AddDbContext<DataContext>(dbOptions => dbOptions.UseSqlite("Data Source=my_database.db"));
+services.AddDbContext<DataContext>(dbOptions => dbOptions.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Projects_VSStudio\01.DatabaseCourse\Assignment_DatabaseCourse\Data\Databases\localDatabase.mdf;Integrated Security=True;Connect Timeout=30"));
 
 services.AddScoped<IProjectRepository, ProjectRepository>();
 services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -40,8 +44,18 @@ services.AddScoped<IUnitTypeService, UnitTypeService>();
 services.AddScoped<IStatusTypeService, StatusTypeService>();
 
 services.AddScoped<IMenuDialogs, MenuDialogs>();
+services.AddScoped<ICustomerDialogs, CustomerDialogs>();
+services.AddScoped<IContactPersonDialogs, ContactPersonDialogs>();
+
+//services.AddScoped(provider => new Lazy<IMenuDialogs>(provider.GetRequiredService<IMenuDialogs>));
 
 var serviceProvider = services.BuildServiceProvider();
 var menudialog = serviceProvider.GetRequiredService<IMenuDialogs>();
 
-menudialog.Run();
+await menudialog.Run();
+
+
+
+
+
+

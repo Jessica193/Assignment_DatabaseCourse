@@ -11,6 +11,10 @@ public interface IContactPersonService
     Task<ContactPerson?> GetContactPersonById(int id);
     Task<bool> UpdateContactPerson(int id, ContactPersonUpdateForm form);
     Task<bool> DeleteContactPerson(int id);
+
+
+    //NYTT
+    Task<IEnumerable<ContactPerson>> GetAllContactPersonsWithCustomersAsync();
 }
 
 

@@ -30,6 +30,7 @@ public static class CustomerFactory
                 LastName = row.LastName,
                 Email = row.Email,
                 PhoneNumber = row.PhoneNumber,
+                CustomerId = row.CustomerId,
             });
 
         return new Customer()
