@@ -9,7 +9,7 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
 {
     private readonly ICustomerService _customerService = customerService;
 
-    public async Task Run()
+    public async Task RunAsync()
     {
         while(true)
         {
@@ -31,19 +31,19 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
             switch (option)
             {
                 case "1":
-                    await CreateCustomer();
+                    await CreateCustomerAsync();
                     break;
                 case "2":
-                    await ViewAllCustomers();
+                    await ViewAllCustomersAsync();
                     break;
                 case "3":
-                    await ViewOneCustomer();
+                    await ViewOneCustomerAsync();
                     break;
                 case "4":
-                    await UpdateCustomer();
+                    await UpdateCustomerAsync();
                     break;
                 case "5":
-                    await DeleteCustomer();
+                    await DeleteCustomerAsync();
                     break;
                 case "6":
                     return;
@@ -59,7 +59,7 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         }
     }
 
-    public async Task CreateCustomer()
+    public async Task CreateCustomerAsync()
     {
         Console.Clear();
         var customerRegistrationform = CustomerFactory.Create();
@@ -68,7 +68,7 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         Console.Write("Name: ");
         customerRegistrationform.Name = Console.ReadLine()!.Trim();
 
-        var result = await _customerService.Create(customerRegistrationform);
+        var result = await _customerService.CreateAsync(customerRegistrationform);
         if (result)
         {
             Console.WriteLine("Customer was successfully created");
@@ -82,11 +82,11 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         Console.ReadKey();
     }
 
-    public async Task ViewAllCustomers()
+    public async Task ViewAllCustomersAsync()
     {
 
         Console.Clear();
-        var customers = await _customerService.GetAllCustomer();
+        var customers = await _customerService.GetAllCustomerAsync();
 
         if (customers.Any())
         {
@@ -102,7 +102,7 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         Console.ReadKey();
     }
 
-    public async Task ViewOneCustomer()
+    public async Task ViewOneCustomerAsync()
     {
         Console.Clear();
         int id;
@@ -111,7 +111,7 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         {
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
-        var customer = await _customerService.GetCustomerById(id);
+        var customer = await _customerService.GetCustomerByIdAsync(id);
         if (customer != null)
         {
             Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}");
@@ -125,10 +125,10 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         Console.ReadKey();
     }
 
-    public async Task UpdateCustomer()
+    public async Task UpdateCustomerAsync()
     {
         Console.Clear();
-        var customers = await _customerService.GetAllCustomer();
+        var customers = await _customerService.GetAllCustomerAsync();
 
         foreach (var customer in customers)
         { Console.WriteLine($"Customer ID: {customer.Id}, Customer name: {customer.Name}"); }
@@ -145,7 +145,7 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         Console.Write($"Change name to: ");
         customerUpdateForm.Name = Console.ReadLine()!.Trim();
 
-        var result = await _customerService.UpdateCustomer(id, customerUpdateForm);
+        var result = await _customerService.UpdateCustomerAsync(id, customerUpdateForm);
         if (result)
         {
             Console.WriteLine("Customer was successfully updated");
@@ -158,10 +158,10 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         Console.ReadKey();
     }
 
-    public async Task DeleteCustomer()
+    public async Task DeleteCustomerAsync()
     {
         Console.Clear();
-        var customers = await _customerService.GetAllCustomer();
+        var customers = await _customerService.GetAllCustomerAsync();
 
         foreach (var customer in customers)
         { Console.WriteLine($"Customer ID: {customer.Id}, Customer name: {customer.Name}"); }
@@ -174,7 +174,7 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
 
-        var result = await _customerService.DeleteCustomer(id);
+        var result = await _customerService.DeleteCustomerAsync(id);
         if (result)
         {
             Console.WriteLine("CustomerEntity was successfully deleted");

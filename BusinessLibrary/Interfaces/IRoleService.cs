@@ -5,11 +5,11 @@ namespace BusinessLibrary.Interfaces;
 
 public interface IRoleService
 {
-    Task<bool> Create(RoleRegistrationForm form);
-    Task<IEnumerable<Role>> GetAllRoles();
-    Task<Role?> GetRoleById(int id);
-    Task<bool> UpdateRole(int id, RoleUpdateForm form);
-    Task<bool> DeleteRole(int id);
+    Task<bool> CreateAsync(RoleRegistrationForm form);
+    Task<IEnumerable<Role>> GetAllRolesAsync();
+    Task<Role?> GetRoleByIdAsync(int id);
+    Task<bool> UpdateRoleAsync(int id, RoleUpdateForm form);
+    Task<bool> DeleteRoleAsync(int id);
 }
 
 

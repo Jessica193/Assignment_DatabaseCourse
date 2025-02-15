@@ -6,11 +6,11 @@ namespace BusinessLibrary.Interfaces;
 
 public interface IContactPersonService
 {
-    Task<bool> Create(ContactPersonRegistrationForm form);
-    Task<IEnumerable<ContactPerson>> GetAllContactPersons();
-    Task<ContactPerson?> GetContactPersonById(int id);
-    Task<bool> UpdateContactPerson(int id, ContactPersonUpdateForm form);
-    Task<bool> DeleteContactPerson(int id);
+    Task<bool> CreateAsync(ContactPersonRegistrationForm form);
+    Task<IEnumerable<ContactPerson>> GetAllContactPersonsAsync();
+    Task<ContactPerson?> GetContactPersonByIdAsync(int id);
+    Task<bool> UpdateContactPersonAsync(int id, ContactPersonUpdateForm form);
+    Task<bool> DeleteContactPersonAsync(int id);
 
 
     //NYTT

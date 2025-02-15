@@ -15,7 +15,7 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
 
  
 
-    public async Task Run()
+    public async Task RunAsync()
     {
         while (true)
         {
@@ -37,19 +37,19 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
             switch (option)
             {
                 case "1":
-                    await CreateContactPerson();
+                    await CreateContactPersonAsync();
                     break;
                 case "2":
-                    await ViewAllContactPersons();
+                    await ViewAllContactPersonsAsync();
                     break;
                 case "3":
-                    await ViewOneContactPerson();
+                    await ViewOneContactPersonAsync();
                     break;
                 case "4":
-                    await UpdateContactPerson();
+                    await UpdateContactPersonAsync();
                     break;
                 case "5":
-                    await DeleteContactPerson();
+                    await DeleteContactPersonAsync();
                     break;
                 case "6":
                     return;
@@ -67,14 +67,14 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
         
     }
 
-    public async Task CreateContactPerson()
+    public async Task CreateContactPersonAsync()
     {
         Console.Clear();
         var contactPersonRegistrationform = ContactPersonFactory.Create();
 
         Console.WriteLine("***** LIST OF CUSTOMERS *****");
         Console.WriteLine("");
-        var customers = await _customerService.GetAllCustomer();
+        var customers = await _customerService.GetAllCustomerAsync();
 
         foreach (var customer in customers)
         { Console.WriteLine($"Customer ID: {customer.Id}, Customer name: {customer.Name}"); }
@@ -108,7 +108,7 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
         contactPersonRegistrationform.PhoneNumber = Console.ReadLine()!.Trim();
         Console.WriteLine("");
 
-        var result = await _contactPersonService.Create(contactPersonRegistrationform);
+        var result = await _contactPersonService.CreateAsync(contactPersonRegistrationform);
         if (result)
         {
             Console.WriteLine("Contact person was successfully created");
@@ -123,11 +123,11 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
     }
 
 
-    public async Task ViewAllContactPersons()
+    public async Task ViewAllContactPersonsAsync()
     {
 
         Console.Clear();
-        var contactPersons = await _contactPersonService.GetAllContactPersons();
+        var contactPersons = await _contactPersonService.GetAllContactPersonsAsync();
 
         if (contactPersons.Any())
         {
@@ -148,7 +148,7 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
 
     }
 
-    public async Task ViewOneContactPerson()
+    public async Task ViewOneContactPersonAsync()
     {
         Console.Clear();
         int id;
@@ -157,7 +157,7 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
         {
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
-        var contactPerson = await _contactPersonService.GetContactPersonById(id);
+        var contactPerson = await _contactPersonService.GetContactPersonByIdAsync(id);
         if (contactPerson != null)
         {
             Console.WriteLine($"ID: {contactPerson.Id}, Name: {contactPerson.FirstName} {contactPerson.LastName}, Email: {contactPerson.Email}, Phone number: {contactPerson.PhoneNumber}, CustomerId: {contactPerson.CustomerId}");
@@ -171,12 +171,12 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
         Console.ReadKey();
     }
 
-    public async Task UpdateContactPerson()
+    public async Task UpdateContactPersonAsync()
     {
         Console.Clear();
 
         Console.WriteLine("***** LIST OF CONTACT PERSONS *****");
-        var contactPersons = await _contactPersonService.GetAllContactPersons();
+        var contactPersons = await _contactPersonService.GetAllContactPersonsAsync();
         foreach (var contactPerson in contactPersons)
         {
             Console.WriteLine($"ID: {contactPerson.Id}, Name: {contactPerson.FirstName} {contactPerson.LastName}    Email: {contactPerson.Email}   Phone number: {contactPerson.PhoneNumber}");
@@ -204,7 +204,7 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
         Console.Write($"Change phone number to: ");
         contactPersonUpdateForm.PhoneNumber = Console.ReadLine()!.Trim();
 
-        var result = await _contactPersonService.UpdateContactPerson(id, contactPersonUpdateForm);
+        var result = await _contactPersonService.UpdateContactPersonAsync(id, contactPersonUpdateForm);
         if (result)
         {
             Console.WriteLine("Contact person was successfully updated");
@@ -217,11 +217,11 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
         Console.ReadKey();
     }
 
-    public async Task DeleteContactPerson()
+    public async Task DeleteContactPersonAsync()
     {
         Console.Clear();
         Console.WriteLine("***** LIST OF CONTACT PERSONS *****");
-        var contactPersons = await _contactPersonService.GetAllContactPersons();
+        var contactPersons = await _contactPersonService.GetAllContactPersonsAsync();
         foreach (var contactPerson in contactPersons)
         {
             Console.WriteLine($"ID: {contactPerson.Id}, Name: {contactPerson.FirstName} {contactPerson.LastName}, Email: {contactPerson.Email}, Phone number: {contactPerson.PhoneNumber}, CustomerId: {contactPerson.CustomerId}");
@@ -236,7 +236,7 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
 
-        var result = await _contactPersonService.DeleteContactPerson(id);
+        var result = await _contactPersonService.DeleteContactPersonAsync(id);
         if (result)
         {
             Console.WriteLine("Contact person was successfully deleted");

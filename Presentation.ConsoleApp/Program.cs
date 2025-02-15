@@ -52,7 +52,7 @@ services.AddScoped<IContactPersonDialogs, ContactPersonDialogs>();
 var serviceProvider = services.BuildServiceProvider();
 var menudialog = serviceProvider.GetRequiredService<IMenuDialogs>();
 
-await menudialog.Run();
+await menudialog.RunAsync();
 
 
 

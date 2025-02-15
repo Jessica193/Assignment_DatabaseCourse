@@ -5,13 +5,13 @@ namespace BusinessLibrary.Interfaces;
 
 public interface ICustomerService
 {
-    Task<bool> Create(CustomerRegistrationForm form);
-    Task<IEnumerable<Customer>> GetAllCustomer();
-    Task<IEnumerable<Customer>> GetAllCustomerWithContactPersons();
-    Task<Customer?> GetCustomerById(int id);
-    Task<Customer?> GetCustomerWithContactPersonsById(int id);
-    Task<bool> UpdateCustomer(int id, CustomerUpdateForm form);
-    Task<bool> DeleteCustomer(int id);
+    Task<bool> CreateAsync(CustomerRegistrationForm form);
+    Task<IEnumerable<Customer>> GetAllCustomerAsync();
+    Task<IEnumerable<Customer>> GetAllCustomerWithContactPersonsAsync();
+    Task<Customer?> GetCustomerByIdAsync(int id);
+    Task<Customer?> GetCustomerWithContactPersonsByIdAsync(int id);
+    Task<bool> UpdateCustomerAsync(int id, CustomerUpdateForm form);
+    Task<bool> DeleteCustomerAsync(int id);
 }
 
 

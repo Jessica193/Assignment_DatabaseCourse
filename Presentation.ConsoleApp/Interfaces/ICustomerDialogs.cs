@@ -2,6 +2,6 @@
 {
     public interface ICustomerDialogs
     {
-        Task Run();
+        Task RunAsync();
     }
 }

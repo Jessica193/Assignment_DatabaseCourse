@@ -11,7 +11,7 @@ public class RoleService(IRoleRepository roleRepository) : IRoleService
 {
     private readonly IRoleRepository _roleRepository = roleRepository;
 
-    public async Task<bool> Create(RoleRegistrationForm form)
+    public async Task<bool> CreateAsync(RoleRegistrationForm form)
     {
         if (string.IsNullOrWhiteSpace(form.Name)) return false;
 
@@ -33,14 +33,14 @@ public class RoleService(IRoleRepository roleRepository) : IRoleService
     }
 
 
-    public async Task<IEnumerable<Role>> GetAllRoles()
+    public async Task<IEnumerable<Role>> GetAllRolesAsync()
     {
         var entities = await _roleRepository.GetAllAsync();
         var roles = entities.Select(RoleFactory.Create).ToList();
         return roles;
     }
 
-    public async Task<Role?> GetRoleById(int id)
+    public async Task<Role?> GetRoleByIdAsync(int id)
     {
         var result = await _roleRepository.ExistsAsync(x => x.Id == id);
 
@@ -53,7 +53,7 @@ public class RoleService(IRoleRepository roleRepository) : IRoleService
         return null;
     }
 
-    public async Task<bool> UpdateRole(int id, RoleUpdateForm form)
+    public async Task<bool> UpdateRoleAsync(int id, RoleUpdateForm form)
     {
         var entity = await _roleRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
@@ -72,7 +72,7 @@ public class RoleService(IRoleRepository roleRepository) : IRoleService
         }
     }
 
-    public async Task<bool> DeleteRole(int id)
+    public async Task<bool> DeleteRoleAsync(int id)
     {
         var entity = await _roleRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;

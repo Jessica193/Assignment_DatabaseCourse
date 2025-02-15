@@ -40,7 +40,7 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
     //    }
     //}
 
-    public async Task Run()
+    public async Task RunAsync()
     {
 
         while (true)
@@ -65,10 +65,10 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
             switch (option)
             {
                 case "1":
-                    await _customerDialogs.Run();
+                    await _customerDialogs.RunAsync();
                     break;
                 case "2":
-                    await _contactPersonDialogs.Run();
+                    await _contactPersonDialogs.RunAsync();
                     break;
                 case "3":
                     await ViewOneProject();
@@ -175,7 +175,7 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
     //    // projectRepository.CreateProjectAsync(projectEntity)
     //}
 
-    public async Task CreateProject()
+    public async Task CreateProjectAsync()
     {
         var projectForm = ProjectFactory.Create();
         var customerForm = CustomerFactory.Create();
@@ -336,14 +336,7 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
         Console.Write("");
 
 
-        _projectService.Create(projectForm);
-        _customerService.Create(customerForm);
-        _contactPersonService.Create(contactPersonForm);
-        _serviceService.Create(serviceForm);
-        _unitTypeService.Create(unitTypeForm);
-        _employeeService.Create(employeeForm);
-        _roleService.Create(roleForm);
-        _statusTypeService.Create(statusTypeForm);
+       
 
 
         Console.ReadKey();
@@ -352,7 +345,7 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
     public async Task ViewAllProjects()
     {
         Console.Clear();
-        await _projectService.GetAllProjectsWithDetails(); 
+        await _projectService.GetAllProjectsWithDetailsAsync(); 
         Console.ReadKey();
     }
 

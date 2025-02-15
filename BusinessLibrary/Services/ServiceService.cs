@@ -13,7 +13,7 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
 {
     private readonly IServiceRepository _serviceRepository = serviceRepository;
 
-    public async Task<bool> Create(ServiceRegistrationForm form)
+    public async Task<bool> CreateAsync(ServiceRegistrationForm form)
     {
         if (string.IsNullOrWhiteSpace(form.Name) || form.PricePerUnit == 0) return false;
 
@@ -34,14 +34,14 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
         }
     }
 
-    public async Task<IEnumerable<Service>> GetAllServicesWithUnitType()
+    public async Task<IEnumerable<Service>> GetAllServicesWithUnitTypeAsync()
     {
         var entities = await _serviceRepository.GetAllWithDetailsAsync(query => query.Include(s => s.Unit));
         var services = entities.Select(ServiceFactory.Create).ToList();
         return services;
     }
 
-    public async Task<Service?> GetServiceWithUnitTypeById(int id)
+    public async Task<Service?> GetServiceWithUnitTypeByIdAsync(int id)
     {
         var result = await _serviceRepository.ExistsAsync(x => x.Id == id);
 
@@ -54,7 +54,7 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
         return null;
     }
 
-    public async Task<bool> UpdateService(int id, ServiceUpdateForm form)
+    public async Task<bool> UpdateServiceAsync(int id, ServiceUpdateForm form)
     {
         var entity = await _serviceRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
@@ -72,7 +72,7 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
             return false;
         }
     }
-    public async Task<bool> DeleteService(int id)
+    public async Task<bool> DeleteServiceAsync(int id)
     {
         var entity = await _serviceRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;

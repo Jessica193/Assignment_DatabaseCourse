@@ -12,7 +12,7 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
 {
     private readonly IContactPersonRepository _contactPersonRepository = contactPersonRepository;
 
-    public async Task<bool> Create(ContactPersonRegistrationForm form)
+    public async Task<bool> CreateAsync(ContactPersonRegistrationForm form)
     {
         if (string.IsNullOrWhiteSpace(form.FirstName) || string.IsNullOrWhiteSpace(form.LastName) || string.IsNullOrWhiteSpace(form.Email) || string.IsNullOrWhiteSpace(form.PhoneNumber)) return false;
 
@@ -33,7 +33,7 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
         }
     }
 
-    public async Task<IEnumerable<ContactPerson>> GetAllContactPersons()
+    public async Task<IEnumerable<ContactPerson>> GetAllContactPersonsAsync()
     {
         var entities = await _contactPersonRepository.GetAllAsync();
         var contactPersons = entities.Select(ContactPersonFactory.Create).ToList();
@@ -54,7 +54,7 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
 
 
 
-    public async Task<ContactPerson?> GetContactPersonById(int id)
+    public async Task<ContactPerson?> GetContactPersonByIdAsync(int id)
     {
         var result = await _contactPersonRepository.ExistsAsync(x => x.Id == id);
 
@@ -67,7 +67,7 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
         return null;
     }
 
-    public async Task<bool> UpdateContactPerson(int id, ContactPersonUpdateForm form)
+    public async Task<bool> UpdateContactPersonAsync(int id, ContactPersonUpdateForm form)
     {
         var entity = await _contactPersonRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
@@ -86,7 +86,7 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
         }
     }
 
-    public async Task<bool> DeleteContactPerson(int id)
+    public async Task<bool> DeleteContactPersonAsync(int id)
     {
         var entity = await _contactPersonRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;

@@ -12,7 +12,7 @@ public class StatusTypeService(IStatusTypeRepository statusTypeRepository) : ISt
 {
     private readonly IStatusTypeRepository _statusTypeRepository = statusTypeRepository;
 
-    public async Task<bool> Create(StatusTypeRegistrationForm form)
+    public async Task<bool> CreateAsync(StatusTypeRegistrationForm form)
     {
         if (string.IsNullOrWhiteSpace(form.Status)) return false;
 
@@ -34,14 +34,14 @@ public class StatusTypeService(IStatusTypeRepository statusTypeRepository) : ISt
     }
 
 
-    public async Task<IEnumerable<StatusType>> GetAllStatusTypes()
+    public async Task<IEnumerable<StatusType>> GetAllStatusTypesAsync()
     {
         var entities = await _statusTypeRepository.GetAllAsync();
         var statusTypes = entities.Select(StatusTypeFactory.Create).ToList();
         return statusTypes;
     }
 
-    public async Task<StatusType?> GetStatusTypeById(int id)
+    public async Task<StatusType?> GetStatusTypeByIdAsync(int id)
     {
         var result = await _statusTypeRepository.ExistsAsync(x => x.Id == id);
 
@@ -54,7 +54,7 @@ public class StatusTypeService(IStatusTypeRepository statusTypeRepository) : ISt
         return null;
     }
 
-    public async Task<bool> UpdateStatusType(int id, StatusTypeUpdateForm form)
+    public async Task<bool> UpdateStatusTypeAsync(int id, StatusTypeUpdateForm form)
     {
         var entity = await _statusTypeRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
@@ -73,7 +73,7 @@ public class StatusTypeService(IStatusTypeRepository statusTypeRepository) : ISt
         }
     }
 
-    public async Task<bool> DeleteStatusType(int id)
+    public async Task<bool> DeleteStatusTypeAsync(int id)
     {
         var entity = await _statusTypeRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;

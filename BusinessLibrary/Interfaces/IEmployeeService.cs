@@ -5,13 +5,13 @@ namespace BusinessLibrary.Interfaces;
 
 public interface IEmployeeService
 {
-    Task<bool> Create(EmployeeRegistrationForm form);
-    Task<IEnumerable<Employee>> GetAllEmployees();
-    Task<IEnumerable<Employee>> GetAllEmployeesWithRole();
-    Task<Employee?> GetEmployeeById(int id);
-    Task<Employee?> GetEmployeeWithRoleById(int id);
-    Task<bool> UpdateEmployee(int id, EmployeeUpdateForm form);
-    Task<bool> DeleteEmployee(int id);
+    Task<bool> CreateAsync(EmployeeRegistrationForm form);
+    Task<IEnumerable<Employee>> GetAllEmployeesAsync();
+    Task<IEnumerable<Employee>> GetAllEmployeesWithRoleAsync();
+    Task<Employee?> GetEmployeeByIdAsync(int id);
+    Task<Employee?> GetEmployeeWithRoleByIdAsync(int id);
+    Task<bool> UpdateEmployeeAsync(int id, EmployeeUpdateForm form);
+    Task<bool> DeleteEmployeeAsync(int id);
 }
 
 

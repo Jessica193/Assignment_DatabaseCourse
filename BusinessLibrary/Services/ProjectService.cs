@@ -12,7 +12,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
 
-    public async Task<bool> Create(ProjectRegistrationForm form)
+    public async Task<bool> CreateAsync(ProjectRegistrationForm form)
     {
         if (string.IsNullOrWhiteSpace(form.Name) || form.QuantityofServiceUnits == 0 ) return false;
 
@@ -33,7 +33,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         }
     }
     
-    public async Task<IEnumerable<Project>> GetAllProjects()
+    public async Task<IEnumerable<Project>> GetAllProjectsAsync()
     {
         var entities = await _projectRepository.GetAllAsync();
         var projects = entities.Select(ProjectFactory.Create).ToList();
@@ -44,7 +44,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
 
  
 
-    public async Task<IEnumerable<Project>> GetAllProjectsWithDetails()
+    public async Task<IEnumerable<Project>> GetAllProjectsWithDetailsAsync()
     {
         var entities = await _projectRepository.GetAllWithDetailsAsync(query => query
         .Include(p => p.Customer)
@@ -71,7 +71,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         //});
     }
 
-    public async Task<Project?> GetProjectById(int id)
+    public async Task<Project?> GetProjectByIdAsync(int id)
     {
         var result = await _projectRepository.ExistsAsync(x => x.Id == id);
 
@@ -84,7 +84,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         return null;
     }
 
-    public async Task<Project?> GetProjectWithDetailsById(int id)
+    public async Task<Project?> GetProjectWithDetailsByIdAsync(int id)
     {
         var result = await _projectRepository.ExistsAsync(x => x.Id == id);
 
@@ -105,7 +105,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         return null;
     }
 
-    public async Task<bool> UpdateProject(int id, ProjectUpdateForm form)
+    public async Task<bool> UpdateProjectAsync(int id, ProjectUpdateForm form)
     {
         var entity = await _projectRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
@@ -124,7 +124,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         }
     }
 
-    public async Task<bool> DeleteProject(int id)
+    public async Task<bool> DeleteProjectAsync(int id)
     {
         var entity = await _projectRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;

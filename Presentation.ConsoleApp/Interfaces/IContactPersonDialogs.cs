@@ -2,6 +2,6 @@
 {
     public interface IContactPersonDialogs
     {
-        Task Run();
+        Task RunAsync();
     }
 }

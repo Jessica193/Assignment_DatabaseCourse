@@ -2,6 +2,6 @@
 {
     public interface IMenuDialogs
     {
-        Task Run();
+        Task RunAsync();
     }
 }

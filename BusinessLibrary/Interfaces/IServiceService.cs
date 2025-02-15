@@ -5,11 +5,11 @@ namespace BusinessLibrary.Interfaces;
 
 public interface IServiceService
 {
-    Task<bool> Create(ServiceRegistrationForm form);
-    Task<IEnumerable<Service>> GetAllServicesWithUnitType();
-    Task<Service?> GetServiceWithUnitTypeById(int id);
-    Task<bool> UpdateService(int id, ServiceUpdateForm form);
-    Task<bool> DeleteService(int id);
+    Task<bool> CreateAsync(ServiceRegistrationForm form);
+    Task<IEnumerable<Service>> GetAllServicesWithUnitTypeAsync();
+    Task<Service?> GetServiceWithUnitTypeByIdAsync(int id);
+    Task<bool> UpdateServiceAsync(int id, ServiceUpdateForm form);
+    Task<bool> DeleteServiceAsync(int id);
 }
 
 
