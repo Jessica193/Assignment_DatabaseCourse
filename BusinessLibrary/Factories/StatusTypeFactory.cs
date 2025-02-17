@@ -32,7 +32,7 @@ public static class StatusTypeFactory
                 StartDate = row.StartDate,
                 EndDate = row.EndDate,
                 QuantityofServiceUnits = row.QuantityofServiceUnits,
-                TotalPrice = row.TotalPrice, //behövs något göras här?
+                //TotalPrice = row.TotalPrice, //behövs något göras här?
                 CustomerId = row.CustomerId,
                 StatusTypeId = row.StatusTypeId,
                 EmployeeId = row.EmployeeId,

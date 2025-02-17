@@ -7,7 +7,7 @@ using Presentation.ConsoleApp.Interfaces;
 
 namespace Presentation.ConsoleApp.Dialogs;
 
-public class MenuDialogs(IProjectService projectService, ICustomerService customerService, IContactPersonService contactPersonService, IServiceService serviceService, IUnitTypeService unitTypeService, IEmployeeService employeeService, IRoleService roleService, IStatusTypeService statusTypeService, ICustomerDialogs customerDialogs, IContactPersonDialogs contactPersonDialogs) : IMenuDialogs
+public class MenuDialogs(IProjectService projectService, ICustomerService customerService, IContactPersonService contactPersonService, IServiceService serviceService, IUnitTypeService unitTypeService, IEmployeeService employeeService, IRoleService roleService, IStatusTypeService statusTypeService, ICustomerDialogs customerDialogs, IContactPersonDialogs contactPersonDialogs, IEmployeeDialogs employeeDialogs, IRoleDialogs roleDialogs, IServiceDialogs serviceDialogs, IStatusTypeDialogs statusTypeDialogs, IUnitTypeDialogs unitTypeDialogs, IProjectDialogs projectDialogs) : IMenuDialogs
 {
     private readonly IProjectService _projectService = projectService;
     private readonly ICustomerService _customerService = customerService;
@@ -19,26 +19,12 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
     private readonly IStatusTypeService _statusTypeService = statusTypeService;
     private readonly ICustomerDialogs _customerDialogs = customerDialogs;
     private readonly IContactPersonDialogs _contactPersonDialogs = contactPersonDialogs;
-
-
-
-    //public void Run()
-    //{
-    //    while (true)
-    //    {
-    //        Console.Clear();
-    //        var option = MainMenu();
-    //        if (!string.IsNullOrEmpty(option))
-    //        {
-    //            OptionSwitch(option);
-    //        }
-    //        else
-    //        {
-    //            Console.Clear();
-    //            Console.WriteLine("You must enter an option");
-    //        }
-    //    }
-    //}
+    private readonly IEmployeeDialogs _employeeDialogs = employeeDialogs;
+    private readonly IRoleDialogs _roleDialogs = roleDialogs;
+    private readonly IServiceDialogs _serviceDialogs = serviceDialogs;
+    private readonly IStatusTypeDialogs _statusTypeDialogs = statusTypeDialogs;
+    private readonly IUnitTypeDialogs _unitTypeDialogs = unitTypeDialogs;
+    private readonly IProjectDialogs _projectDialogs = projectDialogs;
 
     public async Task RunAsync()
     {
@@ -49,19 +35,19 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
             Console.WriteLine("**** MAIN MENU *****");
             Console.WriteLine("");
             Console.WriteLine("1. Manage customers");
-            Console.WriteLine("2. Manage customer contact persons");
+            Console.WriteLine("2. Manage contact persons");
             Console.WriteLine("3. Manage Employees");
-            Console.WriteLine("4. Manage employee roles");
+            Console.WriteLine("4. Manage roles");
             Console.WriteLine("5. Manage Services");
             Console.WriteLine("6. Manage status types");
-            Console.WriteLine("7. Manage service unit types");
+            Console.WriteLine("7. Manage unit types");
             Console.WriteLine("8. Manage Projects");
             Console.WriteLine("9. Quit application");
             Console.WriteLine("----------------------------------------");
             Console.Write("Enter your option: ");
 
             var option = Console.ReadLine()!;
-            //return option;
+
             switch (option)
             {
                 case "1":
@@ -71,16 +57,26 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
                     await _contactPersonDialogs.RunAsync();
                     break;
                 case "3":
-                    await ViewOneProject();
+                    await _employeeDialogs.RunAsync();
                     break;
+
                 case "4":
-                    await UpdateProject();
+                    await _roleDialogs.RunAsync();
                     break;
                 case "5":
-                    await DeleteProject();
+                    await _serviceDialogs.RunAsync();
                     break;
                 case "6":
-                    await QuitApplication();
+                    await _statusTypeDialogs.RunAsync();
+                    break;
+                case "7":
+                    await _unitTypeDialogs.RunAsync();
+                    break;
+                case "8":
+                    await _projectDialogs.RunAsync();
+                    break;
+                case "9":
+                     QuitApplication();
                     break;
                 default:
                     Console.Clear();
@@ -90,39 +86,11 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
             }
 
         }
-        
-      
+
+
     }
 
-    //public void OptionSwitch(string option)
-    //{
-    //    switch (option)
-    //    {
-    //        case "1":
-    //            _customerDialogs.Run();
-    //            break;
-    //        case "2":
-    //            ViewAllProjects();
-    //            break;
-    //        case "3":
-    //            ViewOneProject();
-    //            break;
-    //        case "4":
-    //            UpdateProject();
-    //            break;
-    //        case "5":
-    //            DeleteProject();
-    //            break;
-    //        case "6":
-    //            QuitApplication();
-    //            break;
-    //        default:
-    //            Console.Clear();
-    //            Console.WriteLine("You must enter a valid option");
-    //            Console.ReadKey();
-    //            break;
-    //    }
-    //}
+
 
 
     //public void CreateProject2()
@@ -133,29 +101,29 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
     //    form.Name = Console.ReadLine()!;
 
 
-        // Välj status: 
-        // statuses = service.getAllStatus()
-        // foreach (var status in statuses)
-        // console.writeline(status.id, status.name)
-        // Console.WriteLine("ange status id").
-        // form.statusId = Console.ReadLine()!
+    // Välj status: 
+    // statuses = service.getAllStatus()
+    // foreach (var status in statuses)
+    // console.writeline(status.id, status.name)
+    // Console.WriteLine("ange status id").
+    // form.statusId = Console.ReadLine()!
 
 
-        // Console.WriteLine("ange customer id").
-        // form.customerId = Console.ReadLine()!
+    // Console.WriteLine("ange customer id").
+    // form.customerId = Console.ReadLine()!
 
 
-        // projectService.Create(form)
+    // projectService.Create(form)
 
-        // projectservice
+    // projectservice
 
 
 
-        // var customerResult = customerService.CreateCustomer(customerFactory(form.Customer))
+    // var customerResult = customerService.CreateCustomer(customerFactory(form.Customer))
 
-        //var statusModel = statusService.CreateStatus(statusFactory(form.Status))
+    //var statusModel = statusService.CreateStatus(statusFactory(form.Status))
 
-        // var serviceModel = serviceService.CreateService(serviceFactory(form.Service, form.Unit))
+    // var serviceModel = serviceService.CreateService(serviceFactory(form.Service, form.Unit))
 
     //    var projectEntity = new ProjectEntity
     //    {
@@ -170,7 +138,7 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
     //       //ServiceId = serviceModel.Id
     //    };
 
-       
+
 
     //    // projectRepository.CreateProjectAsync(projectEntity)
     //}
@@ -178,13 +146,6 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
     public async Task CreateProjectAsync()
     {
         var projectForm = ProjectFactory.Create();
-        var customerForm = CustomerFactory.Create();
-        var contactPersonForm = ContactPersonFactory.Create();
-        var serviceForm = ServiceFactory.Create();
-        var unitTypeForm = UnitTypeFactory.Create();
-        var employeeForm = EmployeeFactory.Create();
-        var roleForm = RoleFactory.Create();
-        var statusTypeForm = StatusTypeFactory.Create();
 
         Console.Clear();
         Console.WriteLine("***** Information about the project *****");
@@ -234,148 +195,26 @@ public class MenuDialogs(IProjectService projectService, ICustomerService custom
         }
         projectForm.EndDate = endDate;
         Console.Write("");
+    }
 
-        Console.Write("Status (Not Started/Ongoing/Finished): ");
-        statusTypeForm.Status = Console.ReadLine()!;
-        Console.Write("");
-
-
-
-
-        Console.Clear();
-        Console.WriteLine("***** Information about the customer *****");
-
-        Console.Write("Customer name: ");
-        customerForm.Name = Console.ReadLine()!;
-        Console.Write("");
-
-        Console.Write("Contact person, first name: ");
-        contactPersonForm.FirstName = Console.ReadLine()!;
-        Console.Write("");
-
-        Console.Write("Contact person, last name: ");
-        contactPersonForm.LastName = Console.ReadLine()!;
-        Console.Write("");
-
-        Console.Write("Contact person, email address: ");
-        contactPersonForm.Email = Console.ReadLine()!;
-        Console.Write("");
-
-        Console.Write("Contact person, phone number: ");
-        contactPersonForm.PhoneNumber = Console.ReadLine()!;
-        Console.Write("");
-
-
-
-        Console.Clear();
-        Console.WriteLine("***** Information about the employee *****");
-
-        Console.Write("First name: ");
-        employeeForm.FirstName = Console.ReadLine()!;
-        Console.Write("");
-
-        Console.Write("Last name: ");
-        employeeForm.LastName = Console.ReadLine()!;
-        Console.Write("");
-
-        Console.Write("Email: ");
-        employeeForm.Email = Console.ReadLine()!;
-        Console.Write("");
-
-        Console.Write("Role in project: ");
-        roleForm.Name = Console.ReadLine()!;
-        Console.Write("");
-
-
-
-        Console.Clear();
-        Console.WriteLine("***** Information about the service *****");
-
-        Console.Write("Name of service: ");
-        serviceForm.Name = Console.ReadLine()!;
-        Console.Write("");
-
-
-        int quantity;
-        while (true)
+    public void QuitApplication()
+    {
         {
-            Console.Write("Quantity: ");
-            string? inputQuantity = Console.ReadLine();
-            if (int.TryParse(inputQuantity, out quantity))
+            Console.Clear();
+            Console.Write("Do you want to qiut this application (y/n): ");
+            string answer = Console.ReadLine()!.ToLower().Trim();
+
+            if (string.IsNullOrEmpty(answer))
             {
-                break;
+                Console.WriteLine("You must enter a valid option");
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey();
             }
-            else
+            else if (answer == "y")
             {
-                Console.WriteLine("Invalid quantity! Please enter a numeric value.");
+                Environment.Exit(0);
             }
         }
-        projectForm.QuantityofServiceUnits = quantity;
-        Console.Write("");
-
-
-        decimal pricePerUnit;
-        while (true)
-        {
-            Console.Write("Price/unit: ");
-            string? inputPricePerUnit = Console.ReadLine();
-            if (decimal.TryParse(inputPricePerUnit, out pricePerUnit))
-            {
-                break;
-            }
-            else
-            {
-                Console.WriteLine("Invalid price! Please enter a numeric value.");
-            }
-        }
-        serviceForm.PricePerUnit = pricePerUnit;
-        Console.Write("");
-
-        Console.Write("Service unit: ");
-        unitTypeForm.Unit = Console.ReadLine()!;
-        Console.Write("");
-
-
-       
-
-
-        Console.ReadKey();
     }
-
-    public async Task ViewAllProjects()
-    {
-        Console.Clear();
-        await _projectService.GetAllProjectsWithDetailsAsync(); 
-        Console.ReadKey();
-    }
-
-    public async Task ViewOneProject()
-    {
-        Console.Clear();
-        Console.WriteLine("Metod view one");
-        Console.ReadKey();
-    }
-
-    public async Task UpdateProject()
-    {
-        Console.Clear();
-        Console.WriteLine("Metod update");
-        Console.ReadKey();
-    }
-
-    public async Task DeleteProject()
-    {
-        Console.Clear();
-        Console.WriteLine("Metod delete");
-        Console.ReadKey();
-    }
-
-    public async Task QuitApplication()
-    {
-        Console.Clear();
-        Console.WriteLine("Metod quit");
-        Console.ReadKey();
-    }
-
 
 }

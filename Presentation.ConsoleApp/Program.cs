@@ -46,6 +46,12 @@ services.AddScoped<IStatusTypeService, StatusTypeService>();
 services.AddScoped<IMenuDialogs, MenuDialogs>();
 services.AddScoped<ICustomerDialogs, CustomerDialogs>();
 services.AddScoped<IContactPersonDialogs, ContactPersonDialogs>();
+services.AddScoped<IEmployeeDialogs, EmployeeDialogs>();
+services.AddScoped<IRoleDialogs, RoleDialogs>();
+services.AddScoped<IServiceDialogs, ServiceDialogs>();
+services.AddScoped<IStatusTypeDialogs, StatusTypeDialogs>();
+services.AddScoped<IUnitTypeDialogs, UnitTypeDialogs>();
+services.AddScoped<IProjectDialogs, ProjectDialogs>();
 
 //services.AddScoped(provider => new Lazy<IMenuDialogs>(provider.GetRequiredService<IMenuDialogs>));
 

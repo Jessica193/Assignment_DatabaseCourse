@@ -22,25 +22,17 @@ namespace BusinessLibrary.Dtos
         public int QuantityofServiceUnits { get; set; }
 
        
-        public decimal TotalPrice { get; set; }
+        //public decimal TotalPrice { get; set; }
 
         public int CustomerId { get; set; }
 
-       // public CustomerRegistrationForm Customer { get; set; } = null!;
         public int EmployeeId { get; set; }
 
-        //public EmployeeRegistrationForm Employee { get; set; } = null!;
         
         public int StatusTypeId { get; set; }
 
-        //public StatusTypeRegistrationForm Status { get; set; } = null!;
-
         public int ServiceId { get; set; }
 
-        //public ServiceRegistrationForm Service { get; set; } = null!;
-
-     
-       // public ContactPersonRegistrationForm ContactPerson { get; set; } = null!;
 
 
        

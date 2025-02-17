@@ -1,26 +1,27 @@
 ﻿using BusinessLibrary.Dtos;
 using BusinessLibrary.Factories;
 using BusinessLibrary.Interfaces;
+using BusinessLibrary.Services;
 using Presentation.ConsoleApp.Interfaces;
 
 namespace Presentation.ConsoleApp.Dialogs;
 
-public class CustomerDialogs(ICustomerService customerService) : ICustomerDialogs
+public class RoleDialogs(IRoleService roleService) : IRoleDialogs
 {
-    private readonly ICustomerService _customerService = customerService;
+    private readonly IRoleService _roleService = roleService;
 
     public async Task RunAsync()
     {
-        while(true)
+        while (true)
         {
             Console.Clear();
-            Console.WriteLine("**** CUSTOMER MENU *****");
+            Console.WriteLine("**** ROLE MENU *****");
             Console.WriteLine("");
-            Console.WriteLine("1. Create a customer");
-            Console.WriteLine("2. View all customers");
-            Console.WriteLine("3. View one customer");
-            Console.WriteLine("4. Update a customer");
-            Console.WriteLine("5. Delete a customer");
+            Console.WriteLine("1. Create a role");
+            Console.WriteLine("2. View all roles");
+            Console.WriteLine("3. View one role");
+            Console.WriteLine("4. Update a role");
+            Console.WriteLine("5. Delete a role");
             Console.WriteLine("6. Back to main menu");
             Console.WriteLine("7. Quit application");
             Console.WriteLine("----------------------------------------");
@@ -31,19 +32,19 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
             switch (option)
             {
                 case "1":
-                    await CreateCustomerAsync();
+                    await CreateRoleAsync();
                     break;
                 case "2":
-                    await ViewAllCustomersAsync();
+                    await ViewAllRolesAsync();
                     break;
                 case "3":
-                    await ViewOneCustomerAsync();
+                    await ViewOneRoleAsync();
                     break;
                 case "4":
-                    await UpdateCustomerAsync();
+                    await UpdateRoleAsync();
                     break;
                 case "5":
-                    await DeleteCustomerAsync();
+                    await DeleteRoleAsync();
                     break;
                 case "6":
                     return;
@@ -59,129 +60,129 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         }
     }
 
-    public async Task CreateCustomerAsync()
+    public async Task CreateRoleAsync()
     {
         Console.Clear();
-        var customerRegistrationform = CustomerFactory.Create();
+        var roleRegistrationform = RoleFactory.Create();
 
-        Console.WriteLine("***** Creating new customer *****");
-        Console.Write("Name: ");
-        customerRegistrationform.Name = Console.ReadLine()!.Trim();
+        Console.WriteLine("***** Creating new role *****");
+        Console.Write("Name of role: ");
+        roleRegistrationform.Name = Console.ReadLine()!.Trim();
 
-        var result = await _customerService.CreateAsync(customerRegistrationform);
+        var result = await _roleService.CreateAsync(roleRegistrationform);
         if (result)
         {
-            Console.WriteLine("Customer was successfully created");
+            Console.WriteLine("Role was successfully created");
         }
         else
         {
-            Console.WriteLine("Customer was not created");
+            Console.WriteLine("Role was not created");
         }
 
         Console.Write("Press any key to continue");
         Console.ReadKey();
     }
 
-    public async Task ViewAllCustomersAsync()
+    public async Task ViewAllRolesAsync()
     {
 
         Console.Clear();
-        var customers = await _customerService.GetAllCustomerAsync();
+        var roles = await _roleService.GetAllRolesAsync();
 
-        if (customers.Any())
+        if (roles.Any())
         {
-            foreach (var customer in customers)
-            { Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}"); }
+            foreach (var role in roles)
+            { Console.WriteLine($"ID: {role.Id}, Name: {role.Name}"); }
         }
         else
         {
-            Console.WriteLine("No customers found");
+            Console.WriteLine("No roles found");
         }
 
         Console.Write("Press any key to continue");
         Console.ReadKey();
     }
 
-    public async Task ViewOneCustomerAsync()
+    public async Task ViewOneRoleAsync()
     {
         Console.Clear();
         int id;
-        Console.WriteLine("Enter the ID-number for the customer you would like to view.");
+        Console.WriteLine("Enter the ID-number for the role you would like to view.");
         while (!int.TryParse(Console.ReadLine(), out id))
         {
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
-        var customer = await _customerService.GetCustomerByIdAsync(id);
-        if (customer != null)
+        var role = await _roleService.GetRoleByIdAsync(id);
+        if (role != null)
         {
-            Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}");
+            Console.WriteLine($"ID: {role.Id}, Name: {role.Name}");
         }
         else
         {
-            Console.WriteLine("Customer was not found");
+            Console.WriteLine("Role was not found");
         }
 
         Console.Write("Press any key to continue");
         Console.ReadKey();
     }
 
-    public async Task UpdateCustomerAsync()
+    public async Task UpdateRoleAsync()
     {
         Console.Clear();
-        var customers = await _customerService.GetAllCustomerAsync();
+        var roles = await _roleService.GetAllRolesAsync();
 
-        foreach (var customer in customers)
-        { Console.WriteLine($"Customer ID: {customer.Id}, Customer name: {customer.Name}"); }
+        foreach (var role in roles)
+        { Console.WriteLine($"ID: {role.Id}, Name: {role.Name}"); }
 
         Console.WriteLine("---------------------------------------");
         int id;
-        Console.WriteLine("Enter the ID-number for the customer you would like to update.");
+        Console.WriteLine("Enter the ID-number for the role you would like to update.");
         while (!int.TryParse(Console.ReadLine(), out id))
         {
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
 
-        var customerUpdateForm = new CustomerUpdateForm();
-        Console.Write($"Change name to: ");
-        customerUpdateForm.Name = Console.ReadLine()!.Trim();
+        var roleUpdateForm = new RoleUpdateForm();
+        Console.Write($"Change name of role to: ");
+        roleUpdateForm.Name = Console.ReadLine()!.Trim();
 
-        var result = await _customerService.UpdateCustomerAsync(id, customerUpdateForm);
+        var result = await _roleService.UpdateRoleAsync(id, roleUpdateForm);
         if (result)
         {
-            Console.WriteLine("Customer was successfully updated");
+            Console.WriteLine("Role was successfully updated");
         }
         else
         {
-            Console.WriteLine("Customer was not updated");
+            Console.WriteLine("Role was not updated");
         }
         Console.Write("Press any key to continue");
         Console.ReadKey();
     }
 
-    public async Task DeleteCustomerAsync()
+    public async Task DeleteRoleAsync()
     {
         Console.Clear();
-        var customers = await _customerService.GetAllCustomerAsync();
+        var roles = await _roleService.GetAllRolesAsync();
 
-        foreach (var customer in customers)
-        { Console.WriteLine($"Customer ID: {customer.Id}, Customer name: {customer.Name}"); }
+        foreach (var role in roles)
+        { Console.WriteLine($"ID: {role.Id}, Name: {role.Name}"); }
 
         Console.WriteLine("---------------------------------------");
         int id;
-        Console.WriteLine("Enter the ID-number for the customer you would like to delete.");
+        Console.WriteLine("Enter the ID-number for the role you would like to delete.");
         while (!int.TryParse(Console.ReadLine(), out id))
         {
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
 
-        var result = await _customerService.DeleteCustomerAsync(id);
+        var result = await _roleService.DeleteRoleAsync(id);
         if (result)
         {
-            Console.WriteLine("Customer was successfully deleted");
+            Console.WriteLine("Role was successfully deleted");
         }
         else
         {
-            Console.WriteLine("Customer was not deleted");
+            Console.WriteLine("Role was not deleted");
         }
         Console.Write("Press any key to continue");
         Console.ReadKey();
@@ -207,3 +208,30 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

@@ -78,11 +78,12 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
 
         foreach (var customer in customers)
         { Console.WriteLine($"Customer ID: {customer.Id}, Customer name: {customer.Name}"); }
-        Console.WriteLine(""); 
+        Console.WriteLine("");
+        Console.WriteLine("-----------------------------------------------");
         Console.WriteLine("");
 
         int id;
-        Console.WriteLine("The contact person you want to create represents the company with ID-number: ");
+        Console.WriteLine("Select a customer for the contact person (enter the ID-number): ");
         while (!int.TryParse(Console.ReadLine(), out id))
         {
             Console.Write("Invalid input! Please enter a valid ID: ");

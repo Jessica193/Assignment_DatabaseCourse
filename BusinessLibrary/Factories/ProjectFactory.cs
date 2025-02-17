@@ -39,7 +39,7 @@ public static class ProjectFactory
             StartDate = entity.StartDate,
             EndDate = entity.EndDate,
             QuantityofServiceUnits= entity.QuantityofServiceUnits,
-            TotalPrice = entity.QuantityofServiceUnits * entity.Service.PricePerUnit, //Den här vill jag ha redan när jag sparar ner entiteten
+            //TotalPrice = entity.QuantityofServiceUnits * entity.Service.PricePerUnit, //Den här vill jag ha redan när jag sparar ner entiteten
             CustomerId = entity.CustomerId,
             EmployeeId = entity.EmployeeId,
             ServiceId = entity.ServiceId,
@@ -63,7 +63,7 @@ public static class ProjectFactory
             StartDate = form.StartDate,
             EndDate = form.EndDate,
             QuantityofServiceUnits = form.QuantityofServiceUnits,
-            TotalPrice = form.QuantityofServiceUnits * entity.Service.PricePerUnit,
+            //TotalPrice = form.QuantityofServiceUnits * entity.Service.PricePerUnit,
             CustomerId = entity.CustomerId,
             EmployeeId = entity.EmployeeId,
             ServiceId = entity.ServiceId,
