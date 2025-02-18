@@ -13,14 +13,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 
-//Detta måste användas någonstans, var? kolla om video!
-var options = new JsonSerializerOptions()
-{
-    WriteIndented = true,
-    ReferenceHandler = ReferenceHandler.Preserve
-};
-//
-
 var services = new ServiceCollection();
 
 services.AddDbContext<DataContext>(dbOptions => dbOptions.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Projects_VSStudio\01.DatabaseCourse\Assignment_DatabaseCourse\Data\Databases\localDatabase.mdf;Integrated Security=True;Connect Timeout=30"));

@@ -10,7 +10,7 @@ namespace BusinessLibrary.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int QuantityofServiceUnits { get; set; }
-        //public decimal TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
         public int CustomerId { get; set; }
         public int EmployeeId { get; set; }
         public int StatusTypeId { get; set; }

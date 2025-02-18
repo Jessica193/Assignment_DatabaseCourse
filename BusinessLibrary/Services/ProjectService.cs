@@ -3,18 +3,20 @@ using BusinessLibrary.Factories;
 using BusinessLibrary.Interfaces;
 using BusinessLibrary.Models;
 using Data.Interfaces;
+using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace BusinessLibrary.Services;
 
-public class ProjectService(IProjectRepository projectRepository) : IProjectService
+public class ProjectService(IProjectRepository projectRepository, IServiceRepository serviceRepository) : IProjectService
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
+    private readonly IServiceRepository _serviceRepository = serviceRepository;
 
     public async Task<bool> CreateAsync(ProjectRegistrationForm form)
     {
-        if (string.IsNullOrWhiteSpace(form.Name) || form.QuantityofServiceUnits == 0 ) return false;
+        if (string.IsNullOrWhiteSpace(form.Name) || form.QuantityofServiceUnits == 0) return false;
 
         var result = await _projectRepository.ExistsAsync(x => x.Name.ToLower() == form.Name.ToLower());
         if (result)
@@ -23,7 +25,8 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         }
         try
         {
-            await _projectRepository.CreateAsync(ProjectFactory.Create(form));
+            var projectEntity = await ProjectFactory.CreateAsync(form, _serviceRepository);
+            await _projectRepository.CreateAsync(projectEntity);
             return true;
         }
         catch (Exception ex)
@@ -32,7 +35,7 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
             return false;
         }
     }
-    
+
     public async Task<IEnumerable<Project>> GetAllProjectsAsync()
     {
         var entities = await _projectRepository.GetAllAsync();
@@ -40,9 +43,9 @@ public class ProjectService(IProjectRepository projectRepository) : IProjectServ
         return projects;
     }
 
-    
 
- 
+
+
 
     public async Task<IEnumerable<Project>> GetAllProjectsWithDetailsAsync()
     {

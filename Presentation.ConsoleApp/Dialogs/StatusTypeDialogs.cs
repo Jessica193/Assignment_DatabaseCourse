@@ -92,7 +92,7 @@ public class StatusTypeDialogs(IStatusTypeService statusTypeService) : IStatusTy
         if (statusTypes.Any())
         {
             foreach (var statusType in statusTypes)
-            { Console.WriteLine($"ID: {statusType.Id}, Status type: {statusType.Status}"); }
+            { Console.WriteLine($"ID: {statusType.Id}, {statusType.Status}"); }
         }
         else
         {
@@ -115,7 +115,7 @@ public class StatusTypeDialogs(IStatusTypeService statusTypeService) : IStatusTy
         var statusType = await _statusTypeService.GetStatusTypeByIdAsync(id);
         if (statusType != null)
         {
-            Console.WriteLine($"ID: {statusType.Id}, Status type: {statusType.Status}");
+            Console.WriteLine($"ID: {statusType.Id}, {statusType.Status}");
         }
         else
         {
@@ -132,7 +132,7 @@ public class StatusTypeDialogs(IStatusTypeService statusTypeService) : IStatusTy
         var statusTypes = await _statusTypeService.GetAllStatusTypesAsync();
 
         foreach (var statusType in statusTypes)
-        { Console.WriteLine($"ID: {statusType.Id}, Status type: {statusType.Status}"); }
+        { Console.WriteLine($"ID: {statusType.Id}, {statusType.Status}"); }
 
         Console.WriteLine("---------------------------------------");
         int id;
@@ -165,7 +165,7 @@ public class StatusTypeDialogs(IStatusTypeService statusTypeService) : IStatusTy
         var statusTypes = await _statusTypeService.GetAllStatusTypesAsync();
 
         foreach (var statusType in statusTypes)
-        { Console.WriteLine($"ID: {statusType.Id}, Status type: {statusType.Status}"); }
+        { Console.WriteLine($"ID: {statusType.Id}, {statusType.Status}"); }
 
         Console.WriteLine("---------------------------------------");
         int id;

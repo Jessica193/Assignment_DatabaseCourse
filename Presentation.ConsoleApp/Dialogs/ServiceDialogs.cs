@@ -72,13 +72,13 @@ public class ServiceDialogs(IServiceService serviceService, IUnitTypeService uni
         var unitTypes = await _unitTypeService.GetAllUnitTypesAsync();
 
         foreach (var unitType in unitTypes)
-        { Console.WriteLine($"ID: {unitType.Id}, Unit type: {unitType.Unit}"); }
+        { Console.WriteLine($"ID: {unitType.Id}, {unitType.Unit}"); }
         Console.WriteLine("");
         Console.WriteLine("-----------------------------------------------");
         Console.WriteLine("");
 
         int id;
-        Console.WriteLine("Select unit type for the service (enter the ID-number): ");
+        Console.WriteLine("Select unit for the service (enter the ID-number): ");
         while (!int.TryParse(Console.ReadLine(), out id))
         {
             Console.Write("Invalid input! Please enter a valid ID: ");
@@ -120,7 +120,7 @@ public class ServiceDialogs(IServiceService serviceService, IUnitTypeService uni
         if (services.Any())
         {
             foreach (var service in services)
-            { Console.WriteLine($"ID: {service.Id}, Name: {service.Name}, Price/unit: {service.PricePerUnit}, Unit: {service.Unit.Unit}"); }
+            { Console.WriteLine($"ID: {service.Id}, {service.Name}, Price/unit: {service.PricePerUnit}, Unit: {service.Unit.Unit}"); }
         }
         else
         {
@@ -143,7 +143,7 @@ public class ServiceDialogs(IServiceService serviceService, IUnitTypeService uni
         var service = await _serviceService.GetServiceWithUnitTypeByIdAsync(id);
         if (service != null)
         {
-            Console.WriteLine($"ID: {service.Id}, Name: {service.Name}, Price/unit: {service.PricePerUnit}, Unit: {service.Unit.Unit}");
+            Console.WriteLine($"ID: {service.Id}, {service.Name}, Price/unit: {service.PricePerUnit}, Unit: {service.Unit.Unit}");
         }
         else
         {
@@ -158,7 +158,7 @@ public class ServiceDialogs(IServiceService serviceService, IUnitTypeService uni
         var services = await _serviceService.GetAllServicesWithUnitTypeAsync();
 
         foreach (var service in services)
-        { Console.WriteLine($"ID: {service.Id}, Name: {service.Name}, Price/unit: {service.PricePerUnit}, Unit: {service.Unit.Unit}"); }
+        { Console.WriteLine($"ID: {service.Id}, {service.Name}, Price/unit: {service.PricePerUnit}, Unit: {service.Unit.Unit}"); }
 
         Console.WriteLine("---------------------------------------");
         int id;
@@ -199,7 +199,7 @@ public class ServiceDialogs(IServiceService serviceService, IUnitTypeService uni
         var services = await _serviceService.GetAllServicesWithUnitTypeAsync();
 
         foreach (var service in services)
-        { Console.WriteLine($"ID: {service.Id}, Name: {service.Name}, Price/unit: {service.PricePerUnit}, Unit: {service.Unit.Unit}"); }
+        { Console.WriteLine($"ID: {service.Id}, {service.Name}, Price/unit: {service.PricePerUnit}, Unit: {service.Unit.Unit}"); }
 
         Console.WriteLine("---------------------------------------");
         int id;

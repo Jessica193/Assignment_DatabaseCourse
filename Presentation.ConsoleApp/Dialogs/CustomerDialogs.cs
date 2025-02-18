@@ -86,12 +86,22 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
     {
 
         Console.Clear();
-        var customers = await _customerService.GetAllCustomerAsync();
+        var customers = await _customerService.GetAllCustomerWithContactPersonsAsync();
 
         if (customers.Any())
         {
             foreach (var customer in customers)
-            { Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}"); }
+            { 
+                Console.WriteLine($"ID: {customer.Id}");
+                Console.WriteLine($"Name: {customer.Name}");
+                foreach (var contactPerson in customer.ContactPersons)
+                {
+                    Console.WriteLine($"Contact Person: {contactPerson.FirstName} {contactPerson.LastName}, <{contactPerson.Email}> , {contactPerson.PhoneNumber}");
+                }
+                Console.WriteLine("");
+                Console.WriteLine("--------------------------------------------");
+                Console.WriteLine("");
+            }
         }
         else
         {
@@ -111,10 +121,15 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         {
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
-        var customer = await _customerService.GetCustomerByIdAsync(id);
+        var customer = await _customerService.GetCustomerWithContactPersonsByIdAsync(id);
         if (customer != null)
         {
-            Console.WriteLine($"ID: {customer.Id}, Name: {customer.Name}");
+            Console.WriteLine($"ID: {customer.Id}");
+            Console.WriteLine($"Name: {customer.Name}");
+            foreach (var contactPerson in customer.ContactPersons)
+            {
+                Console.WriteLine($"Contact Person: {contactPerson.FirstName} {contactPerson.LastName}, <{contactPerson.Email}> , {contactPerson.PhoneNumber}");
+            }
         }
         else
         {

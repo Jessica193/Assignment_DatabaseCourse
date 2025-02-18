@@ -92,7 +92,7 @@ public class RoleDialogs(IRoleService roleService) : IRoleDialogs
         if (roles.Any())
         {
             foreach (var role in roles)
-            { Console.WriteLine($"ID: {role.Id}, Name: {role.Name}"); }
+            { Console.WriteLine($"ID: {role.Id}, {role.Name}"); }
         }
         else
         {
@@ -115,7 +115,7 @@ public class RoleDialogs(IRoleService roleService) : IRoleDialogs
         var role = await _roleService.GetRoleByIdAsync(id);
         if (role != null)
         {
-            Console.WriteLine($"ID: {role.Id}, Name: {role.Name}");
+            Console.WriteLine($"ID: {role.Id}, {role.Name}");
         }
         else
         {
@@ -132,7 +132,7 @@ public class RoleDialogs(IRoleService roleService) : IRoleDialogs
         var roles = await _roleService.GetAllRolesAsync();
 
         foreach (var role in roles)
-        { Console.WriteLine($"ID: {role.Id}, Name: {role.Name}"); }
+        { Console.WriteLine($"ID: {role.Id}, {role.Name}"); }
 
         Console.WriteLine("---------------------------------------");
         int id;
@@ -165,7 +165,7 @@ public class RoleDialogs(IRoleService roleService) : IRoleDialogs
         var roles = await _roleService.GetAllRolesAsync();
 
         foreach (var role in roles)
-        { Console.WriteLine($"ID: {role.Id}, Name: {role.Name}"); }
+        { Console.WriteLine($"ID: {role.Id}, {role.Name}"); }
 
         Console.WriteLine("---------------------------------------");
         int id;

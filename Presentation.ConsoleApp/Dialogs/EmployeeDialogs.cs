@@ -74,18 +74,17 @@ public class EmployeeDialogs(IEmployeeService employeeService, IRoleService role
         var roles = await _roleService.GetAllRolesAsync();
 
         foreach (var role in roles)
-        { Console.WriteLine($"ID: {role.Id}, Customer name: {role.Name}"); }
+        { Console.WriteLine($"ID: {role.Id}, {role.Name}"); }
         Console.WriteLine("");
         Console.WriteLine("-----------------------------------------------");
         Console.WriteLine("");
 
         int id;
-        Console.WriteLine("Select the role for the employee (enter the ID-number): ");
+        Console.WriteLine("Select a role for the employee (enter the ID-number): ");
         while (!int.TryParse(Console.ReadLine(), out id))
         {
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
-
         employeeRegistrationform.RoleId = id;
 
         Console.WriteLine("***** Information about the employee *****");
@@ -125,7 +124,10 @@ public class EmployeeDialogs(IEmployeeService employeeService, IRoleService role
         {
             foreach (var employee in employees)
             {
-                Console.WriteLine($"ID: {employee.Id}, Name: {employee.FirstName} {employee.LastName}, Email: {employee.Email}, Role: {employee.Role.Name}");
+                Console.WriteLine($"ID: {employee.Id}");
+                Console.WriteLine($"{employee.FirstName} {employee.LastName}, <{employee.Email}>, {employee.Role.Name}");
+                Console.WriteLine("");
+                Console.WriteLine("--------------------------------------------------------");
                 Console.WriteLine("");
             }
         }
@@ -150,7 +152,11 @@ public class EmployeeDialogs(IEmployeeService employeeService, IRoleService role
         var employee = await _employeeService.GetEmployeeWithRoleByIdAsync(id);
         if (employee != null)
         {
-            Console.WriteLine($"ID: {employee.Id}, Name: {employee.FirstName} {employee.LastName}, Email: {employee.Email}, Role: {employee.Role.Name}");
+            Console.WriteLine($"ID: {employee.Id}");
+            Console.WriteLine($"{employee.FirstName} {employee.LastName}, <{employee.Email}>, {employee.Role.Name}");
+            Console.WriteLine("");
+            Console.WriteLine("--------------------------------------------------------");
+            Console.WriteLine("");
         }
         else
         {

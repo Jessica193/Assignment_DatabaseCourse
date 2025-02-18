@@ -17,7 +17,5 @@ public class EmployeeRegistrationForm
     public string Email { get; set; } = null!;
 
     public int RoleId { get; set; }
-    //public RoleRegistrationForm Roles { get; set; } = null!;
-
 
 }

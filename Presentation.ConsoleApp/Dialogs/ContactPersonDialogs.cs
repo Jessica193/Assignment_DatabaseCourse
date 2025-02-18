@@ -128,14 +128,19 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
     {
 
         Console.Clear();
-        var contactPersons = await _contactPersonService.GetAllContactPersonsAsync();
+        var contactPersons = await _contactPersonService.GetAllContactPersonsWithCustomersAsync();
 
         if (contactPersons.Any())
         {
             foreach (var contactPerson in contactPersons)
             {
-                Console.WriteLine($"ID: {contactPerson.Id}, Name: {contactPerson.FirstName} {contactPerson.LastName}, Email: {contactPerson.Email}, Phone number: {contactPerson.PhoneNumber}, CustomerId: {contactPerson.CustomerId}");
+                Console.WriteLine($"ID: {contactPerson.Id}");
+                Console.WriteLine($"{contactPerson.FirstName} {contactPerson.LastName}, <{contactPerson.Email}>, {contactPerson.PhoneNumber}, Customer: {contactPerson.CustomerId}");
+                Console.WriteLine($"Customer: {contactPerson.Customer.Name}");
                 Console.WriteLine("");
+                Console.WriteLine("-------------------------------------------------------------");
+                Console.WriteLine("");
+
             }
         }
         else
@@ -161,7 +166,12 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
         var contactPerson = await _contactPersonService.GetContactPersonByIdAsync(id);
         if (contactPerson != null)
         {
-            Console.WriteLine($"ID: {contactPerson.Id}, Name: {contactPerson.FirstName} {contactPerson.LastName}, Email: {contactPerson.Email}, Phone number: {contactPerson.PhoneNumber}, CustomerId: {contactPerson.CustomerId}");
+            Console.WriteLine($"ID: {contactPerson.Id}");
+            Console.WriteLine($"{contactPerson.FirstName} {contactPerson.LastName}, <{contactPerson.Email}>, {contactPerson.PhoneNumber}, Customer: {contactPerson.CustomerId}");
+            Console.WriteLine($"Customer: {contactPerson.Customer.Name}");
+            Console.WriteLine("");
+            Console.WriteLine("-------------------------------------------------------------");
+            Console.WriteLine("");
         }
         else
         {

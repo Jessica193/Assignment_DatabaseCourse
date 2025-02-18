@@ -21,9 +21,6 @@ namespace BusinessLibrary.Dtos
         [Range(1, int.MaxValue, ErrorMessage = "Quantity must be at least 1")]
         public int QuantityofServiceUnits { get; set; }
 
-       
-        //public decimal TotalPrice { get; set; }
-
         public int CustomerId { get; set; }
 
         public int EmployeeId { get; set; }
@@ -31,18 +28,6 @@ namespace BusinessLibrary.Dtos
         
         public int StatusTypeId { get; set; }
 
-        public int ServiceId { get; set; }
-
-
-
-       
-
-        
-        
-        
-
-        
-
-       
+        public int ServiceId { get; set; } 
     }
 }

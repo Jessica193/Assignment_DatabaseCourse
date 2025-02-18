@@ -1,18 +1,26 @@
 ﻿using BusinessLibrary.Dtos;
 using BusinessLibrary.Models;
 using Data.Entities;
+using Data.Interfaces;
+using Data.Repositories;
 
 namespace BusinessLibrary.Factories;
 
 public static class ProjectFactory
 {
+   
     public static ProjectRegistrationForm Create()
     {
         return new ProjectRegistrationForm();
     }
 
-    public static ProjectEntity Create(ProjectRegistrationForm form)
+    public static async Task<ProjectEntity> CreateAsync(ProjectRegistrationForm form, IServiceRepository serviceRepository)
     {
+        //Hjälp från chatGPT4o för att få fram TotalPrice
+        var service = await serviceRepository.GetOneAsync(s => s.Id == form.ServiceId);
+        if (service == null) throw new Exception("Service not found");
+
+
         return new ProjectEntity()
         {
             Name = form.Name,
@@ -20,7 +28,7 @@ public static class ProjectFactory
             StartDate = form.StartDate,
             EndDate = form.EndDate,
             QuantityofServiceUnits = form.QuantityofServiceUnits,
-            // TotalPrice = form.QuantityofServiceUnits * form.Service.PricePerUnit Går inte för jag har inte tillgång till Service
+            TotalPrice = form.QuantityofServiceUnits * service.PricePerUnit,
             CustomerId = form.CustomerId,
             EmployeeId = form.EmployeeId,
             ServiceId = form.ServiceId,
@@ -39,7 +47,7 @@ public static class ProjectFactory
             StartDate = entity.StartDate,
             EndDate = entity.EndDate,
             QuantityofServiceUnits= entity.QuantityofServiceUnits,
-            //TotalPrice = entity.QuantityofServiceUnits * entity.Service.PricePerUnit, //Den här vill jag ha redan när jag sparar ner entiteten
+            TotalPrice = entity.TotalPrice,
             CustomerId = entity.CustomerId,
             EmployeeId = entity.EmployeeId,
             ServiceId = entity.ServiceId,
@@ -63,7 +71,7 @@ public static class ProjectFactory
             StartDate = form.StartDate,
             EndDate = form.EndDate,
             QuantityofServiceUnits = form.QuantityofServiceUnits,
-            //TotalPrice = form.QuantityofServiceUnits * entity.Service.PricePerUnit,
+            TotalPrice = form.TotalPrice,
             CustomerId = entity.CustomerId,
             EmployeeId = entity.EmployeeId,
             ServiceId = entity.ServiceId,

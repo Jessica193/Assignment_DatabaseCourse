@@ -214,7 +214,7 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
 
-        projectRegistrationForm.EmployeeId = customer_Id;
+        projectRegistrationForm.CustomerId = customer_Id;
 
 
 
@@ -288,6 +288,7 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
                 Console.WriteLine($"Price/unit: {project.Service.PricePerUnit}");
                 Console.WriteLine($"Unit: {project.Service.Unit.Unit}");
                 Console.WriteLine($"Quantity: {project.QuantityofServiceUnits}");
+                Console.WriteLine($"Total price: {project.TotalPrice}");
                 Console.WriteLine("");
                 Console.WriteLine("CUSTOMER INFO");
                 Console.WriteLine($"Customer: {project.Customer.Name}");
@@ -300,6 +301,7 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
                 Console.WriteLine("EMPLOYEE INFO");
                 Console.WriteLine($"Name: {project.Employee.FirstName} {project.Employee.LastName}");
                 Console.WriteLine($"Email: {project.Employee.Email}");
+                Console.WriteLine($"Role: {project.Employee.Role.Name}");
                 Console.WriteLine("---------------------------------------------");
             }
         }
@@ -339,6 +341,7 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
             Console.WriteLine($"Price/unit: {project.Service.PricePerUnit}");
             Console.WriteLine($"Unit: {project.Service.Unit.Unit}");
             Console.WriteLine($"Quantity: {project.QuantityofServiceUnits}");
+            Console.WriteLine($"Total price: {project.TotalPrice}");
             Console.WriteLine("");
             Console.WriteLine("CUSTOMER INFO");
             Console.WriteLine($"Customer: {project.Customer.Name}");
@@ -351,6 +354,7 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
             Console.WriteLine("EMPLOYEE INFO");
             Console.WriteLine($"Name: {project.Employee.FirstName} {project.Employee.LastName}");
             Console.WriteLine($"Email: {project.Employee.Email}");
+            Console.WriteLine($"Role: {project.Employee.Role.Name}");
             Console.WriteLine("---------------------------------------------");
         }
         else

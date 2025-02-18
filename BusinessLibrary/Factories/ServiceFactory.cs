@@ -34,7 +34,7 @@ public static class ServiceFactory
                 StartDate = row.StartDate,
                 EndDate = row.EndDate,
                 QuantityofServiceUnits = row.QuantityofServiceUnits,
-                //TotalPrice = row.TotalPrice, //behövs något göras här?
+                TotalPrice = row.TotalPrice,
                 CustomerId = row.CustomerId,
                 StatusTypeId = row.StatusTypeId,
                 EmployeeId = row.EmployeeId,

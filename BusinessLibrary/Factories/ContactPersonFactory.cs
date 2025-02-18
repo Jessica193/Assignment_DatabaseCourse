@@ -35,8 +35,6 @@ public static class ContactPersonFactory
             Email = entity.Email,
             PhoneNumber = entity.PhoneNumber,
             CustomerId= entity.CustomerId,
-
-            //Nytt
             Customer = CustomerFactory.Create(entity.Customer),
         };
     }
