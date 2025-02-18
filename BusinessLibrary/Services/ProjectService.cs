@@ -59,19 +59,6 @@ public class ProjectService(IProjectRepository projectRepository, IServiceReposi
         .Include(p => p.StatusType));
         var projects = entities.Select(ProjectFactory.Create).ToList();
         return projects;
-
-        //Fortsätt på detta för att bara skicka med det som behöva. Behöver jag göra en ny ProjectDto istället för Projectmodellen jag har
-        //eller kan jag modifiera den?
-        //return projects.Select(p => new Project {
-        //    Id = p.Id,
-        //    Name = p.Name,
-        //    Description = p.Description,
-        //    StartDate = p.StartDate,
-        //    EndDate = p.EndDate,
-        //    QuantityofServiceUnits = p.QuantityofServiceUnits,
-        //    TotalPrice = p.TotalPrice,
-        //    StatusType = p.StatusType.Status,
-        //});
     }
 
     public async Task<Project?> GetProjectByIdAsync(int id)
@@ -113,11 +100,11 @@ public class ProjectService(IProjectRepository projectRepository, IServiceReposi
         var entity = await _projectRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
 
-        var updatedEntity = ProjectFactory.CreateUpdatedEntity(form, entity);
+        ProjectFactory.CreateUpdatedEntity(form, entity);
 
         try
         {
-            await _projectRepository.UpdateAsync(updatedEntity);
+            await _projectRepository.UpdateAsync(entity);
             return true;
         }
         catch (Exception ex)

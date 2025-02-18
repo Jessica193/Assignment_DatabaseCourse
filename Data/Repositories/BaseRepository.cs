@@ -57,6 +57,10 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
     {
         if (predicate == null) return null!;
         var entity = await _dbSet.FirstOrDefaultAsync(predicate);
+        if (entity != null)
+        {
+            _context.Entry(entity).State = EntityState.Modified; // Ser till att entiteten spåras. genererad av chatGPT4o
+        }
         return entity ?? null!;
     }
 
@@ -70,15 +74,28 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
             query = includeExpression(query);
         }
         var entity = await query.FirstOrDefaultAsync(predicate);
+
+        if (entity != null)
+        {
+            _context.Entry(entity).State = EntityState.Modified; 
+        }
+
         return entity ?? null!;
     }
 
+    /// <summary>
+    /// _context.Entry(updatedEntity).State = EntityState.Modified; genererad av chatGPT4o
+    /// Används istället för _dbSet.Update då entiteten är spårad av GetOne-metoden. Koden markerar entiteten som ändrad och
+    /// sparar ändringarna i nästa steg med _context.SaveChangesAsync();.
+    /// </summary>
+    /// <param name="updatedEntity"></param>
+    /// <returns></returns>
     public async virtual Task<bool> UpdateAsync(TEntity updatedEntity)
     {
         if (updatedEntity == null) return false;
         try
         {
-            _dbSet.Update(updatedEntity);
+            _context.Entry(updatedEntity).State = EntityState.Modified; 
             await _context.SaveChangesAsync();
             return true;
 

@@ -146,7 +146,7 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         var customers = await _customerService.GetAllCustomerAsync();
 
         foreach (var customer in customers)
-        { Console.WriteLine($"Customer ID: {customer.Id}, Customer name: {customer.Name}"); }
+        { Console.WriteLine($"Customer ID: {customer.Id}, {customer.Name}"); }
 
         Console.WriteLine("---------------------------------------");
         int id;
@@ -179,7 +179,7 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
         var customers = await _customerService.GetAllCustomerAsync();
 
         foreach (var customer in customers)
-        { Console.WriteLine($"Customer ID: {customer.Id}, Customer name: {customer.Name}"); }
+        { Console.WriteLine($"Customer ID: {customer.Id}, {customer.Name}"); }
 
         Console.WriteLine("---------------------------------------");
         int id;

@@ -75,9 +75,6 @@ public class EmployeeDialogs(IEmployeeService employeeService, IRoleService role
 
         foreach (var role in roles)
         { Console.WriteLine($"ID: {role.Id}, {role.Name}"); }
-        Console.WriteLine("");
-        Console.WriteLine("-----------------------------------------------");
-        Console.WriteLine("");
 
         int id;
         Console.WriteLine("Select a role for the employee (enter the ID-number): ");
@@ -126,9 +123,6 @@ public class EmployeeDialogs(IEmployeeService employeeService, IRoleService role
             {
                 Console.WriteLine($"ID: {employee.Id}");
                 Console.WriteLine($"{employee.FirstName} {employee.LastName}, <{employee.Email}>, {employee.Role.Name}");
-                Console.WriteLine("");
-                Console.WriteLine("--------------------------------------------------------");
-                Console.WriteLine("");
             }
         }
         else
@@ -154,9 +148,6 @@ public class EmployeeDialogs(IEmployeeService employeeService, IRoleService role
         {
             Console.WriteLine($"ID: {employee.Id}");
             Console.WriteLine($"{employee.FirstName} {employee.LastName}, <{employee.Email}>, {employee.Role.Name}");
-            Console.WriteLine("");
-            Console.WriteLine("--------------------------------------------------------");
-            Console.WriteLine("");
         }
         else
         {
@@ -178,8 +169,7 @@ public class EmployeeDialogs(IEmployeeService employeeService, IRoleService role
         {
             foreach (var employee in employees)
             {
-                Console.WriteLine($"ID: {employee.Id}, Name: {employee.FirstName} {employee.LastName}, Email: {employee.Email}, Role: {employee.Role.Name}");
-                Console.WriteLine("");
+                Console.WriteLine($"ID: {employee.Id}, {employee.FirstName} {employee.LastName}, {employee.Email}, {employee.Role.Name}");
             }
         }
         else
@@ -225,8 +215,7 @@ public class EmployeeDialogs(IEmployeeService employeeService, IRoleService role
         var employees = await _employeeService.GetAllEmployeesWithRoleAsync();
         foreach (var employee in employees)
         {
-            Console.WriteLine($"ID: {employee.Id}, Name: {employee.FirstName} {employee.LastName}, Email: {employee.Email}, Role: {employee.Role.Name}");
-            Console.WriteLine("");
+            Console.WriteLine($"ID: {employee.Id}, {employee.FirstName} {employee.LastName}, {employee.Email}, {employee.Role.Name}");
         }
         Console.WriteLine("---------------------------------------");
 

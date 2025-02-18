@@ -274,8 +274,6 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
             foreach (var project in projects)
             {
                 Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("");
                 Console.WriteLine($"PROJECT: {project.Id} ");
                 Console.WriteLine($"Name: { project.Name}");
                 Console.WriteLine($"Description: {project.Description}");
@@ -323,11 +321,10 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
         {
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
+
         var project = await _projectService.GetProjectWithDetailsByIdAsync(id);
         if (project != null)
         {
-            Console.WriteLine("");
-            Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine($"PROJECT: {project.Id} ");
             Console.WriteLine($"Name: {project.Name}");
@@ -372,13 +369,14 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
         Console.Clear();
 
         Console.WriteLine("***** LIST OF PROJECTS *****");
+        Console.WriteLine("");
         var projects = await _projectService.GetAllProjectsAsync();
 
         if (projects.Any())
         {
             foreach (var project in projects)
             {
-                Console.WriteLine($"ID: {project.Id}, Name: {project.Name}, Start date: {project.StartDate}, End date: {project.EndDate}, Status: {project.StatusType.Status}");
+                Console.WriteLine($"ID: {project.Id}, {project.Name}, Start date: {project.StartDate}, End date: {project.EndDate}, Status: {project.StatusType.Status}");
                 Console.WriteLine("");
             }
         }
@@ -465,14 +463,14 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
         Console.Clear();
 
         Console.WriteLine("***** LIST OF PROJECTS *****");
+        Console.WriteLine("");
         var projects = await _projectService.GetAllProjectsAsync();
 
         if (projects.Any())
         {
             foreach (var project in projects)
             {
-                Console.WriteLine($"ID: {project.Id}, Name: {project.Name}, Start date: {project.StartDate}, End date: {project.EndDate}, Status: {project.StatusType.Status}");
-                Console.WriteLine("");
+                Console.WriteLine($"ID: {project.Id}, {project.Name}, Start date: {project.StartDate}, End date: {project.EndDate}, Status: {project.StatusType.Status}");
             }
         }
         else

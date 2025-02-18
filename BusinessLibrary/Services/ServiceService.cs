@@ -59,11 +59,11 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
         var entity = await _serviceRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
 
-        var updatedEntity = ServiceFactory.CreateUpdatedEntity(form, entity);
+        ServiceFactory.CreateUpdatedEntity(form, entity);
 
         try
         {
-            await _serviceRepository.UpdateAsync(updatedEntity);
+            await _serviceRepository.UpdateAsync(entity);
             return true;
         }
         catch (Exception ex)

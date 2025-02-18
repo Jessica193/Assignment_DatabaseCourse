@@ -80,11 +80,11 @@ public class EmployeeService(IEmployeeRepository employeeRepository) : IEmployee
         var entity = await _employeeRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
 
-        var updatedEntity = EmployeeFactory.CreateUpdatedEntity(form, entity);
+        EmployeeFactory.CreateUpdatedEntity(form, entity);
 
         try
         {
-            await _employeeRepository.UpdateAsync(updatedEntity);
+            await _employeeRepository.UpdateAsync(entity);
             return true;
         }
         catch (Exception ex)

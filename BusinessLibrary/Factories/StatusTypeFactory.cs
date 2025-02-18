@@ -49,12 +49,8 @@ public static class StatusTypeFactory
         };
     }
 
-    public static StatusTypeEntity CreateUpdatedEntity(StatusTypeUpdateForm form, StatusTypeEntity entity)
+    public static void CreateUpdatedEntity(StatusTypeUpdateForm form, StatusTypeEntity entity)
     {
-        return new StatusTypeEntity()
-        {
-            Id = entity.Id,
-            Status = form.Status,
-        };
+        entity.Status = form.Status;
     }
 }

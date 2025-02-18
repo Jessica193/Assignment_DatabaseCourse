@@ -79,11 +79,11 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
         var entity = await _customerRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
 
-        var updatedEntity = CustomerFactory.CreateUpdatedEntity(form, entity);
+        CustomerFactory.UpdateEntity(form, entity);
 
         try
         {
-            await _customerRepository.UpdateAsync(updatedEntity);
+            await _customerRepository.UpdateAsync(entity);
             return true;
         }
         catch (Exception ex)

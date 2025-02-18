@@ -56,15 +56,10 @@ public static class EmployeeFactory
         };
     }
 
-    public static EmployeeEntity CreateUpdatedEntity(EmployeeUpdateForm form, EmployeeEntity entity)
+    public static void CreateUpdatedEntity(EmployeeUpdateForm form, EmployeeEntity entity)
     {
-        return new EmployeeEntity()
-        {
-            Id = entity.Id,
-            FirstName = form.FirstName,
-            LastName = form.LastName,
-            Email = form.Email,
-            RoleId = entity.RoleId,
-        };
+        entity.FirstName = form.FirstName;
+        entity.LastName = form.LastName;
+        entity.Email = form.Email;
     }
 }

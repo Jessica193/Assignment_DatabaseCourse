@@ -44,12 +44,8 @@ public static class RoleFactory
         };
     }
 
-    public static RoleEntity CreateUpdatedEntity(RoleUpdateForm form, RoleEntity entity)
+    public static void CreateUpdatedEntity(RoleUpdateForm form, RoleEntity entity)
     {
-        return new RoleEntity()
-        {
-            Id = entity.Id,
-            Name = form.Name,
-        };
+        entity.Name = form.Name;
     }
 }

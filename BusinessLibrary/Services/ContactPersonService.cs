@@ -41,17 +41,12 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
     }
 
 
-
-    //NYTT + i interfacet
     public async Task<IEnumerable<ContactPerson>> GetAllContactPersonsWithCustomersAsync()
     {
         var entities = await _contactPersonRepository.GetAllWithDetailsAsync(query => query.Include(cp => cp.Customer));
         var contactPersons = entities.Select(ContactPersonFactory.Create).ToList();
         return contactPersons;
     }
-
-    //
-
 
 
     public async Task<ContactPerson?> GetContactPersonByIdAsync(int id)
@@ -72,11 +67,11 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
         var entity = await _contactPersonRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
 
-        var updatedEntity = ContactPersonFactory.CreateUpdatedEntity(form, entity);
+        ContactPersonFactory.UpdateEntity(form, entity);
 
         try
         {
-            await _contactPersonRepository.UpdateAsync(updatedEntity);
+            await _contactPersonRepository.UpdateAsync(entity);
             return true;
         }
         catch (Exception ex)

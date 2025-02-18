@@ -58,11 +58,11 @@ public class UnitTypeService(IUnitTypeRepository unitTypeRepository) : IUnitType
         var entity = await _unitTypeRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
 
-        var updatedEntity = UnitTypeFactory.CreateUpdatedEntity(form, entity);
+        UnitTypeFactory.CreateUpdatedEntity(form, entity);
 
         try
         {
-            await _unitTypeRepository.UpdateAsync(updatedEntity);
+            await _unitTypeRepository.UpdateAsync(entity);
             return true;
         }
         catch (Exception ex)

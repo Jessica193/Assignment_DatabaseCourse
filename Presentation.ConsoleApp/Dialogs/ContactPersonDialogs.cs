@@ -77,10 +77,7 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
         var customers = await _customerService.GetAllCustomerAsync();
 
         foreach (var customer in customers)
-        { Console.WriteLine($"Customer ID: {customer.Id}, Customer name: {customer.Name}"); }
-        Console.WriteLine("");
-        Console.WriteLine("-----------------------------------------------");
-        Console.WriteLine("");
+        { Console.WriteLine($"Customer ID: {customer.Id}, {customer.Name}"); }
 
         int id;
         Console.WriteLine("Select a customer for the contact person (enter the ID-number): ");
@@ -135,7 +132,7 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
             foreach (var contactPerson in contactPersons)
             {
                 Console.WriteLine($"ID: {contactPerson.Id}");
-                Console.WriteLine($"{contactPerson.FirstName} {contactPerson.LastName}, <{contactPerson.Email}>, {contactPerson.PhoneNumber}, Customer: {contactPerson.CustomerId}");
+                Console.WriteLine($"{contactPerson.FirstName} {contactPerson.LastName}, <{contactPerson.Email}>, {contactPerson.PhoneNumber}");
                 Console.WriteLine($"Customer: {contactPerson.Customer.Name}");
                 Console.WriteLine("");
                 Console.WriteLine("-------------------------------------------------------------");
@@ -163,11 +160,13 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
         {
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
+
+        Console.Clear() ;
         var contactPerson = await _contactPersonService.GetContactPersonByIdAsync(id);
         if (contactPerson != null)
         {
             Console.WriteLine($"ID: {contactPerson.Id}");
-            Console.WriteLine($"{contactPerson.FirstName} {contactPerson.LastName}, <{contactPerson.Email}>, {contactPerson.PhoneNumber}, Customer: {contactPerson.CustomerId}");
+            Console.WriteLine($"{contactPerson.FirstName} {contactPerson.LastName}, <{contactPerson.Email}>, {contactPerson.PhoneNumber}");
             Console.WriteLine($"Customer: {contactPerson.Customer.Name}");
             Console.WriteLine("");
             Console.WriteLine("-------------------------------------------------------------");
@@ -187,11 +186,11 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
         Console.Clear();
 
         Console.WriteLine("***** LIST OF CONTACT PERSONS *****");
+        Console.WriteLine("");
         var contactPersons = await _contactPersonService.GetAllContactPersonsAsync();
         foreach (var contactPerson in contactPersons)
         {
-            Console.WriteLine($"ID: {contactPerson.Id}, Name: {contactPerson.FirstName} {contactPerson.LastName}    Email: {contactPerson.Email}   Phone number: {contactPerson.PhoneNumber}");
-            Console.WriteLine("");
+            Console.WriteLine($"ID: {contactPerson.Id}, {contactPerson.FirstName} {contactPerson.LastName}, {contactPerson.Email}, {contactPerson.PhoneNumber}, {contactPerson.Customer.Name}");
         }
         Console.WriteLine("---------------------------------------");
 
@@ -232,11 +231,11 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
     {
         Console.Clear();
         Console.WriteLine("***** LIST OF CONTACT PERSONS *****");
+        Console.WriteLine("");
         var contactPersons = await _contactPersonService.GetAllContactPersonsAsync();
         foreach (var contactPerson in contactPersons)
         {
-            Console.WriteLine($"ID: {contactPerson.Id}, Name: {contactPerson.FirstName} {contactPerson.LastName}, Email: {contactPerson.Email}, Phone number: {contactPerson.PhoneNumber}, CustomerId: {contactPerson.CustomerId}");
-            Console.WriteLine("");
+            Console.WriteLine($"ID: {contactPerson.Id}, {contactPerson.FirstName} {contactPerson.LastName}, {contactPerson.Email}, {contactPerson.PhoneNumber}, {contactPerson.Customer.Name}");
         }
         Console.WriteLine("---------------------------------------");
 

@@ -39,16 +39,11 @@ public static class ContactPersonFactory
         };
     }
 
-    public static ContactPersonEntity CreateUpdatedEntity(ContactPersonUpdateForm form, ContactPersonEntity entity)
+    public static void UpdateEntity(ContactPersonUpdateForm form, ContactPersonEntity entity)
     {
-        return new ContactPersonEntity()
-        {
-            Id = entity.Id,
-            FirstName = form.FirstName,
-            LastName = form.LastName,
-            Email = form.Email,
-            PhoneNumber = form.PhoneNumber,
-            CustomerId = entity.CustomerId,
-        };
-    }
+        entity.FirstName = form.FirstName;
+        entity.LastName = form.LastName;
+        entity.Email = form.Email;
+        entity.PhoneNumber = form.PhoneNumber;
+}
 }

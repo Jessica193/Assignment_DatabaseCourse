@@ -20,43 +20,43 @@ public class DataContext(DbContextOptions<DataContext> options) : DbContext(opti
             .HasOne(p => p.Customer)
             .WithMany(c => c.Projects)
             .HasForeignKey(p => p.CustomerId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<ProjectEntity>()
             .HasOne(p => p.Employee)
             .WithMany(e => e.Projects)
             .HasForeignKey(p => p.EmployeeId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<ProjectEntity>()
             .HasOne(p => p.Service)
             .WithMany(s => s.Projects)
             .HasForeignKey(p => p.ServiceId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<ProjectEntity>()
             .HasOne(p => p.StatusType)
             .WithMany(st => st.Projects)
             .HasForeignKey(p => p.StatusTypeId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<ContactPersonEntity>()
             .HasOne(cp => cp.Customer)
             .WithMany(c => c.ContactPersons)
             .HasForeignKey(cp => cp.CustomerId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<EmployeeEntity>()
             .HasOne(e => e.Role)
             .WithMany(r => r.Employees)
             .HasForeignKey(e => e.RoleId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<ServiceEntity>()
            .HasOne(s => s.Unit)
            .WithMany(ut => ut.Services)
            .HasForeignKey(s => s.UnitTypeId)
-           .OnDelete(DeleteBehavior.Restrict);
+           .OnDelete(DeleteBehavior.Cascade);
 
 
 

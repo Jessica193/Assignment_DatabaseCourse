@@ -54,14 +54,9 @@ public static class ServiceFactory
         };
     }
 
-    public static ServiceEntity CreateUpdatedEntity(ServiceUpdateForm form, ServiceEntity entity)
+    public static void CreateUpdatedEntity(ServiceUpdateForm form, ServiceEntity entity)
     {
-        return new ServiceEntity()
-        {
-            Id = entity.Id,
-            Name = form.Name,
-            PricePerUnit = form.PricePerUnit,
-            UnitTypeId = entity.UnitTypeId
-        };
+        entity.Name = form.Name;
+        entity.PricePerUnit = form.PricePerUnit;
     }
 }

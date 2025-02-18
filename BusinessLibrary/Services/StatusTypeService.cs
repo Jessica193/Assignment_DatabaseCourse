@@ -59,11 +59,11 @@ public class StatusTypeService(IStatusTypeRepository statusTypeRepository) : ISt
         var entity = await _statusTypeRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
 
-        var updatedEntity = StatusTypeFactory.CreateUpdatedEntity(form, entity);
+        StatusTypeFactory.CreateUpdatedEntity(form, entity);
 
         try
         {
-            await _statusTypeRepository.UpdateAsync(updatedEntity);
+            await _statusTypeRepository.UpdateAsync(entity);
             return true;
         }
         catch (Exception ex)

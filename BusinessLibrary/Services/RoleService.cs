@@ -58,11 +58,11 @@ public class RoleService(IRoleRepository roleRepository) : IRoleService
         var entity = await _roleRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
 
-        var updatedEntity = RoleFactory.CreateUpdatedEntity(form, entity);
+        RoleFactory.CreateUpdatedEntity(form, entity);
 
         try
         {
-            await _roleRepository.UpdateAsync(updatedEntity);
+            await _roleRepository.UpdateAsync(entity);
             return true;
         }
         catch (Exception ex)

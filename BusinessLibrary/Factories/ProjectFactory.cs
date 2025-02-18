@@ -52,8 +52,6 @@ public static class ProjectFactory
             EmployeeId = entity.EmployeeId,
             ServiceId = entity.ServiceId,
             StatusTypeId = entity.StatusTypeId,
-
-            //nytt
             StatusType = StatusTypeFactory.Create(entity.StatusType),
             Service = ServiceFactory.Create(entity.Service),
             Employee = EmployeeFactory.Create(entity.Employee),
@@ -61,22 +59,14 @@ public static class ProjectFactory
         };
     }
 
-    public static ProjectEntity CreateUpdatedEntity(ProjectUpdateForm form, ProjectEntity entity)
+    public static void CreateUpdatedEntity(ProjectUpdateForm form, ProjectEntity entity)
     {
-        return new ProjectEntity()
-        {
-            Id = entity.Id,
-            Name = form.Name,
-            Description = form.Description,
-            StartDate = form.StartDate,
-            EndDate = form.EndDate,
-            QuantityofServiceUnits = form.QuantityofServiceUnits,
-            TotalPrice = form.TotalPrice,
-            CustomerId = entity.CustomerId,
-            EmployeeId = entity.EmployeeId,
-            ServiceId = entity.ServiceId,
-            StatusTypeId = entity.StatusTypeId,
-        };
+        entity.Name = form.Name;
+        entity.Description = form.Description;
+        entity.StartDate = form.StartDate;
+        entity.EndDate = form.EndDate;
+        entity.QuantityofServiceUnits = form.QuantityofServiceUnits;
+        entity.TotalPrice = form.TotalPrice;
     }
 
 }

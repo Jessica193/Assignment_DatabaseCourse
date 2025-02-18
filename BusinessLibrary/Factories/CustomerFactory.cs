@@ -41,12 +41,8 @@ public static class CustomerFactory
         };
     }
 
-    public static CustomerEntity CreateUpdatedEntity(CustomerUpdateForm form, CustomerEntity entity)
+    public static void UpdateEntity(CustomerUpdateForm form, CustomerEntity entity)
     {
-        return new CustomerEntity()
-        {
-            Id = entity.Id,
-            Name=form.Name
-        };
+        entity.Name = form.Name;
     }
 }
