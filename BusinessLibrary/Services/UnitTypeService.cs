@@ -20,14 +20,22 @@ public class UnitTypeService(IUnitTypeRepository unitTypeRepository) : IUnitType
         {
             return false;
         }
+
+        await _unitTypeRepository.BeginTransactionAsync();
+
         try
         {
-            await _unitTypeRepository.CreateAsync(UnitTypeFactory.Create(form));
-            return true;
+            await _unitTypeRepository.CreateAsync(UnitTypeFactory.Create(form));  
+            await _unitTypeRepository.SaveToDatabaseAsync(); 
+
+            await _unitTypeRepository.CommitTransactionAsync();
+
+            return true; 
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error creating unittype entity :: {ex.Message}");
+            await _unitTypeRepository.RollbackTransactionAsync(); 
+            Debug.WriteLine($"Error creating unit type entity :: {ex.Message}");
             return false;
         }
     }
@@ -60,14 +68,19 @@ public class UnitTypeService(IUnitTypeRepository unitTypeRepository) : IUnitType
 
         UnitTypeFactory.CreateUpdatedEntity(form, entity);
 
+        await _unitTypeRepository.BeginTransactionAsync();
+
         try
         {
-            await _unitTypeRepository.UpdateAsync(entity);
+            _unitTypeRepository.Update(entity);
+            await _unitTypeRepository.SaveToDatabaseAsync();
+            await _unitTypeRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error updating unittype entity :: {ex.Message}");
+            await _unitTypeRepository.RollbackTransactionAsync();
+            Debug.WriteLine($"Error updating unit type entity :: {ex.Message}");
             return false;
         }
     }
@@ -76,14 +89,20 @@ public class UnitTypeService(IUnitTypeRepository unitTypeRepository) : IUnitType
     {
         var entity = await _unitTypeRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
+
+        await _unitTypeRepository.BeginTransactionAsync();
+
         try
         {
-            await _unitTypeRepository.DeleteAsync(entity);
+            _unitTypeRepository.Delete(entity);
+            await _unitTypeRepository.SaveToDatabaseAsync();
+            await _unitTypeRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error deleting unittype entity :: {ex.Message}");
+            await _unitTypeRepository.RollbackTransactionAsync();
+            Debug.WriteLine($"Error deleting unit type entity :: {ex.Message}");
             return false;
         }
     }

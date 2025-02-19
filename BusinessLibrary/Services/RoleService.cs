@@ -20,13 +20,19 @@ public class RoleService(IRoleRepository roleRepository) : IRoleService
         {
             return false;
         }
+
+        await _roleRepository.BeginTransactionAsync();
+
         try
         {
             await _roleRepository.CreateAsync(RoleFactory.Create(form));
+            await _roleRepository.SaveToDatabaseAsync();
+            await _roleRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _roleRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error creating role entity :: {ex.Message}");
             return false;
         }
@@ -60,13 +66,18 @@ public class RoleService(IRoleRepository roleRepository) : IRoleService
 
         RoleFactory.CreateUpdatedEntity(form, entity);
 
+        await _roleRepository.BeginTransactionAsync();
+
         try
         {
-            await _roleRepository.UpdateAsync(entity);
+            _roleRepository.Update(entity);
+            await _roleRepository.SaveToDatabaseAsync();
+            await _roleRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _roleRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error updating role entity :: {ex.Message}");
             return false;
         }
@@ -76,13 +87,19 @@ public class RoleService(IRoleRepository roleRepository) : IRoleService
     {
         var entity = await _roleRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
+
+        await _roleRepository.BeginTransactionAsync();
+
         try
         {
-            await _roleRepository.DeleteAsync(entity);
+            _roleRepository.Delete(entity);
+            await _roleRepository.SaveToDatabaseAsync();
+            await _roleRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _roleRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error deleting role entity :: {ex.Message}");
             return false;
         }

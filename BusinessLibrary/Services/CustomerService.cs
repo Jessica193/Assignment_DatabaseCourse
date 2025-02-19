@@ -22,13 +22,18 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
             return false;
         }
 
+        await _customerRepository.BeginTransactionAsync();
+
         try
         {
             await _customerRepository.CreateAsync(CustomerFactory.Create(form));
+            await _customerRepository.SaveToDatabaseAsync();
+            await _customerRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _customerRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error creating customer entity :: {ex.Message}");
             return false;
         }
@@ -81,13 +86,18 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
 
         CustomerFactory.UpdateEntity(form, entity);
 
+        await _customerRepository.BeginTransactionAsync();
+
         try
         {
-            await _customerRepository.UpdateAsync(entity);
+            _customerRepository.Update(entity);
+            await _customerRepository.SaveToDatabaseAsync();
+            await _customerRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _customerRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error updating customer entity :: {ex.Message}");
             return false;
         }
@@ -97,13 +107,19 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
     {
         var entity = await _customerRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
+
+        await _customerRepository.BeginTransactionAsync();
+
         try
         {
-            await _customerRepository.DeleteAsync(entity);
+            _customerRepository.Delete(entity);
+            await _customerRepository.SaveToDatabaseAsync();
+            await _customerRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _customerRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error deleting customer entity :: {ex.Message}");
             return false;
         }

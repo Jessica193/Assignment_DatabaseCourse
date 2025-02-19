@@ -22,13 +22,19 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
         {
             return false;
         }
+
+        await _serviceRepository.BeginTransactionAsync();
+
         try
         {
             await _serviceRepository.CreateAsync(ServiceFactory.Create(form));
+            await _serviceRepository.SaveToDatabaseAsync();
+            await _serviceRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _serviceRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error creating service entity :: {ex.Message}");
             return false;
         }
@@ -61,13 +67,18 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
 
         ServiceFactory.CreateUpdatedEntity(form, entity);
 
+        await _serviceRepository.BeginTransactionAsync();
+
         try
         {
-            await _serviceRepository.UpdateAsync(entity);
+            _serviceRepository.Update(entity);
+            await _serviceRepository.SaveToDatabaseAsync();
+            await _serviceRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _serviceRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error updating service entity :: {ex.Message}");
             return false;
         }
@@ -76,13 +87,19 @@ public class ServiceService(IServiceRepository serviceRepository) : IServiceServ
     {
         var entity = await _serviceRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
+
+        await _serviceRepository.BeginTransactionAsync();
+
         try
         {
-            await _serviceRepository.DeleteAsync(entity);
+            _serviceRepository.Delete(entity);
+            await _serviceRepository.SaveToDatabaseAsync();
+            await _serviceRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _serviceRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error deleting service entity :: {ex.Message}");
             return false;
         }

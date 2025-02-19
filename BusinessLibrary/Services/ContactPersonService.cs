@@ -21,13 +21,19 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
         {
             return false;
         }
+
+        await _contactPersonRepository.BeginTransactionAsync();
+
         try
         {
             await _contactPersonRepository.CreateAsync(ContactPersonFactory.Create(form));
+            await _contactPersonRepository.SaveToDatabaseAsync();
+            await _contactPersonRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _contactPersonRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error creating contact person entity :: {ex.Message}");
             return false;
         }
@@ -69,13 +75,18 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
 
         ContactPersonFactory.UpdateEntity(form, entity);
 
+        await _contactPersonRepository.BeginTransactionAsync();
+
         try
         {
-            await _contactPersonRepository.UpdateAsync(entity);
+            _contactPersonRepository.Update(entity);
+            await _contactPersonRepository.SaveToDatabaseAsync();
+            await _contactPersonRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _contactPersonRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error updating contact person entity :: {ex.Message}");
             return false;
         }
@@ -85,13 +96,19 @@ public class ContactPersonService(IContactPersonRepository contactPersonReposito
     {
         var entity = await _contactPersonRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
+
+        await _contactPersonRepository.BeginTransactionAsync();
+
         try
         {
-            await _contactPersonRepository.DeleteAsync(entity);
+            _contactPersonRepository.Delete(entity);
+            await _contactPersonRepository.SaveToDatabaseAsync();
+            await _contactPersonRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
+            await _contactPersonRepository.RollbackTransactionAsync();
             Debug.WriteLine($"Error deleting contact person entity :: {ex.Message}");
             return false;
         }

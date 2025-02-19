@@ -21,14 +21,20 @@ public class StatusTypeService(IStatusTypeRepository statusTypeRepository) : ISt
         {
             return false;
         }
+
+        await _statusTypeRepository.BeginTransactionAsync();
+
         try
         {
             await _statusTypeRepository.CreateAsync(StatusTypeFactory.Create(form));
+            await _statusTypeRepository.SaveToDatabaseAsync();
+            await _statusTypeRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error creating statustype entity :: {ex.Message}");
+            await _statusTypeRepository.RollbackTransactionAsync();
+            Debug.WriteLine($"Error creating status type entity :: {ex.Message}");
             return false;
         }
     }
@@ -61,14 +67,19 @@ public class StatusTypeService(IStatusTypeRepository statusTypeRepository) : ISt
 
         StatusTypeFactory.CreateUpdatedEntity(form, entity);
 
+        await _statusTypeRepository.BeginTransactionAsync();
+
         try
         {
-            await _statusTypeRepository.UpdateAsync(entity);
+            _statusTypeRepository.Update(entity);
+            await _statusTypeRepository.SaveToDatabaseAsync();
+            await _statusTypeRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error updating statustype entity :: {ex.Message}");
+            await _statusTypeRepository.RollbackTransactionAsync();
+            Debug.WriteLine($"Error updating status type entity :: {ex.Message}");
             return false;
         }
     }
@@ -77,14 +88,20 @@ public class StatusTypeService(IStatusTypeRepository statusTypeRepository) : ISt
     {
         var entity = await _statusTypeRepository.GetOneAsync(x => x.Id == id);
         if (entity == null) return false;
+
+        await _statusTypeRepository.BeginTransactionAsync();
+
         try
         {
-            await _statusTypeRepository.DeleteAsync(entity);
+            _statusTypeRepository.Delete(entity);
+            await _statusTypeRepository.SaveToDatabaseAsync();
+            await _statusTypeRepository.CommitTransactionAsync();
             return true;
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error deleting statustype entity :: {ex.Message}");
+            await _statusTypeRepository.RollbackTransactionAsync();
+            Debug.WriteLine($"Error deleting status type entity :: {ex.Message}");
             return false;
         }
     }
