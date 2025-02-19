@@ -62,9 +62,8 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
                     break;
             }
         }
-
-
     }
+
     public async Task CreateProjectAsync()
     {
         Console.Clear();
@@ -322,6 +321,7 @@ public class ProjectDialogs(IProjectService projectService, ICustomerService cus
             Console.Write("Invalid input! Please enter a valid ID: ");
         }
 
+        Console.Clear();
         var project = await _projectService.GetProjectWithDetailsByIdAsync(id);
         if (project != null)
         {

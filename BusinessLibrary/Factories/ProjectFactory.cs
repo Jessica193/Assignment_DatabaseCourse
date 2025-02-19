@@ -38,7 +38,6 @@ public static class ProjectFactory
 
     public static Project Create(ProjectEntity entity)
     {
-
         return new Project()
         {
             Id = entity.Id,
@@ -52,6 +51,7 @@ public static class ProjectFactory
             EmployeeId = entity.EmployeeId,
             ServiceId = entity.ServiceId,
             StatusTypeId = entity.StatusTypeId,
+
             StatusType = StatusTypeFactory.Create(entity.StatusType),
             Service = ServiceFactory.Create(entity.Service),
             Employee = EmployeeFactory.Create(entity.Employee),

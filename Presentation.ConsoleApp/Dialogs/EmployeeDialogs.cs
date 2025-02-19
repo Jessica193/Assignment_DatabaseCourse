@@ -121,8 +121,7 @@ public class EmployeeDialogs(IEmployeeService employeeService, IRoleService role
         {
             foreach (var employee in employees)
             {
-                Console.WriteLine($"ID: {employee.Id}");
-                Console.WriteLine($"{employee.FirstName} {employee.LastName}, <{employee.Email}>, {employee.Role.Name}");
+                Console.WriteLine($"ID: {employee.Id}, {employee.FirstName} {employee.LastName}, <{employee.Email}>, {employee.Role.Name}");
             }
         }
         else

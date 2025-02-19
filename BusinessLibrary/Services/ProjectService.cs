@@ -43,10 +43,6 @@ public class ProjectService(IProjectRepository projectRepository, IServiceReposi
         return projects;
     }
 
-
-
-
-
     public async Task<IEnumerable<Project>> GetAllProjectsWithDetailsAsync()
     {
         var entities = await _projectRepository.GetAllWithDetailsAsync(query => query
