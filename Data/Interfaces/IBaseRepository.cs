@@ -4,7 +4,7 @@ namespace Data.Interfaces;
 
 public interface IBaseRepository<TEntity> where TEntity : class
 {
-    Task<bool> CreateAsync(TEntity entity); //NYTT
+    Task<bool> CreateAsync(TEntity entity);
     Task<IEnumerable<TEntity>> GetAllAsync();
     Task<IEnumerable<TEntity>> GetAllWithDetailsAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> includeExpression);
     Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> predicate);
@@ -12,8 +12,6 @@ public interface IBaseRepository<TEntity> where TEntity : class
     bool Update(TEntity UpdatedEntity);
     bool Delete(TEntity entity);
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate);
-
-    //NYTT
     Task BeginTransactionAsync();
     Task CommitTransactionAsync();
     Task RollbackTransactionAsync();
