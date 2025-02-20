@@ -135,8 +135,6 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
                 Console.WriteLine($"{contactPerson.FirstName} {contactPerson.LastName}, <{contactPerson.Email}>, {contactPerson.PhoneNumber}");
                 Console.WriteLine($"Customer: {contactPerson.Customer.Name}");
                 Console.WriteLine("");
-                Console.WriteLine("-------------------------------------------------------------");
-                Console.WriteLine("");
 
             }
         }
@@ -169,8 +167,7 @@ public class ContactPersonDialogs(IContactPersonService contactPersonService, IC
             Console.WriteLine($"{contactPerson.FirstName} {contactPerson.LastName}, <{contactPerson.Email}>, {contactPerson.PhoneNumber}");
             Console.WriteLine($"Customer: {contactPerson.Customer.Name}");
             Console.WriteLine("");
-            Console.WriteLine("-------------------------------------------------------------");
-            Console.WriteLine("");
+
         }
         else
         {

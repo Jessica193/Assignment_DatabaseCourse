@@ -1,5 +1,7 @@
 ﻿using BusinessLibrary.Dtos;
 using BusinessLibrary.Models;
+using Data.Entities;
+using System.Linq.Expressions;
 
 namespace BusinessLibrary.Interfaces;
 
@@ -12,6 +14,7 @@ public interface IProjectService
     Task<Project?> GetProjectWithDetailsByIdAsync(int id);
     Task<bool> UpdateProjectAsync(int id, ProjectUpdateForm form);
     Task<bool> DeleteProjectAsync(int id);
+    Task<bool> CheckIfProjectExists(Expression<Func<ProjectEntity, bool>> predicate);
 }
 
 

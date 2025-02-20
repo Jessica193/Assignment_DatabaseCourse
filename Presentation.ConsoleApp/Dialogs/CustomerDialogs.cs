@@ -99,8 +99,6 @@ public class CustomerDialogs(ICustomerService customerService) : ICustomerDialog
                     Console.WriteLine($"Contact Person: {contactPerson.FirstName} {contactPerson.LastName}, <{contactPerson.Email}> , {contactPerson.PhoneNumber}");
                 }
                 Console.WriteLine("");
-                Console.WriteLine("--------------------------------------------");
-                Console.WriteLine("");
             }
         }
         else

@@ -2,10 +2,12 @@
 using BusinessLibrary.Factories;
 using BusinessLibrary.Interfaces;
 using BusinessLibrary.Models;
+using Data.Entities;
 using Data.Interfaces;
 using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace BusinessLibrary.Services;
 
@@ -141,6 +143,11 @@ public class ProjectService(IProjectRepository projectRepository, IServiceReposi
             Debug.WriteLine($"Error deleting project entity :: {ex.Message}");
             return false;
         }
+    }
+
+    public async Task<bool> CheckIfProjectExists(Expression<Func<ProjectEntity, bool>> predicate)
+    {
+        return await _projectRepository.ExistsAsync(predicate);
     }
 
 }
