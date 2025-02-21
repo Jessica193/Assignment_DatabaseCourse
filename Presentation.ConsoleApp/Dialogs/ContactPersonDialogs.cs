@@ -1,10 +1,7 @@
 ﻿using BusinessLibrary.Dtos;
 using BusinessLibrary.Factories;
 using BusinessLibrary.Interfaces;
-using BusinessLibrary.Models;
-using BusinessLibrary.Services;
 using Presentation.ConsoleApp.Interfaces;
-using System.Transactions;
 
 namespace Presentation.ConsoleApp.Dialogs;
 

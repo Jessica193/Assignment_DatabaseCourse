@@ -36,12 +36,4 @@ public class ProjectEntity
     public EmployeeEntity Employee { get; set; } = null!;
     public CustomerEntity Customer { get; set; } = null!;
 
-
-
-    //    🔹 Detta händer i databasen:
-
-    //Endast CustomerId lagras i Projects-tabellen.
-    //Ingen ny Customer skapas, utan den pekar på en existerande Customer i databasen.
-    //Navigation property Customer kommer vara null om du hämtar ProjectEntity utan att inkludera Customer.
-    //Om du vill att Customer, Service, Employee och StatusType automatiskt ska fyllas på i ProjectEntity, använd.Include():
 }

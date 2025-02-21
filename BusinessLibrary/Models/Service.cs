@@ -12,6 +12,4 @@ public class Service
     public ICollection<Project> Projects { get; set; } = null!;
 
     public UnitType Unit { get; set; } = null!;
-
-    //public string UnitType { get; set; } = null!;
 }

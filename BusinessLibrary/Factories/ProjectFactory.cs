@@ -16,7 +16,7 @@ public static class ProjectFactory
 
     public static async Task<ProjectEntity> CreateAsync(ProjectRegistrationForm form, IServiceRepository serviceRepository)
     {
-        //Hjälp från chatGPT4o för att få fram TotalPrice
+        //Bitar kopierade från chatGPT4o för att få fram TotalPrice
         var service = await serviceRepository.GetOneAsync(s => s.Id == form.ServiceId);
         if (service == null) throw new Exception("Service not found");
 

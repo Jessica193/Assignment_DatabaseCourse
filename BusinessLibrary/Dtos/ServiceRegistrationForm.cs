@@ -13,7 +13,4 @@ public class ServiceRegistrationForm
     public decimal PricePerUnit { get; set; }
 
     public int UnitTypeId { get; set; }
-    //public UnitTypeRegistrationForm Unit { get; set; } = null!;
-
-
 }

@@ -1,5 +1,4 @@
-﻿using BusinessLibrary.Factories;
-using BusinessLibrary.Interfaces;
+﻿using BusinessLibrary.Interfaces;
 using BusinessLibrary.Services;
 using Data.Contexts;
 using Data.Interfaces;
@@ -8,9 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.ConsoleApp.Dialogs;
 using Presentation.ConsoleApp.Interfaces;
-using System.Security.Authentication.ExtendedProtection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+
 
 
 var services = new ServiceCollection();
@@ -45,7 +42,6 @@ services.AddScoped<IStatusTypeDialogs, StatusTypeDialogs>();
 services.AddScoped<IUnitTypeDialogs, UnitTypeDialogs>();
 services.AddScoped<IProjectDialogs, ProjectDialogs>();
 
-//services.AddScoped(provider => new Lazy<IMenuDialogs>(provider.GetRequiredService<IMenuDialogs>));
 
 var serviceProvider = services.BuildServiceProvider();
 var menudialog = serviceProvider.GetRequiredService<IMenuDialogs>();

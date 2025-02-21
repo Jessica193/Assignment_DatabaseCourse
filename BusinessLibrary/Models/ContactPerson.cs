@@ -12,5 +12,4 @@ public class ContactPerson
     public string PhoneNumber { get; set; } = null!;
     public int CustomerId { get; set; }
     public Customer Customer { get; set; } = null!;
-    //public string CustomerName { get; set; } = null!;
 }
